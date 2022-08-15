@@ -1,0 +1,184 @@
+! User material subroutine
+! Elasto - plasticity in continuum
+! Author: Prafull Bhosale,
+!         M.Tech Design Engineering,
+!         Department of Mechanical Engineering,
+!         Indian Institute of Technology, Bombay
+      SUBROUTINE UMAT(STRESS, STATEV, DDSDDE, SSE, SPD, SCD, RPL,DDSDDT, DRPLDE, DRPLDT, STRAN, DSTRAN, TIME, DTIME, TEMP,DTEMP, PREDEF, DPRED, CMNAME, NDI, NSHR, NTENS, NSTATV,PROPS, NPROPS, COORDS, DROT, PNEWDT, CELENT, DFGRD0,DFGRD1, NOEL, NPT, LAYER, KSPT, KSTEP, KINC)
+!
+      INCLUDE 'ABA_PARAM.INC'
+!
+      CHARACTER*80 CMNAME
+! 
+      DIMENSION STRESS(NTENS), STATEV(NSTATV),DDSDDE(NTENS, NTENS),DDSDDT(NTENS),DRPLDE(NTENS),STRAN(NTENS),DSTRAN(NTENS),TIME(2),PREDEF(1), DPRED(1), PROPS(NPROPS),COORDS(3),DROT(3, 3), DFGRD0(3, 3), DFGRD1(3, 3)
+
+      DIMENSION epsilon_total(NTENS), epsilon_plas(NTENS)
+      
+      REAL normal_to_yield_surf(NTENS), I_mat(NTENS,NTENS), one_vec(NTENS), dev_strain(NTENS), dev_stress(NTENS)
+      
+! code starts      
+      write(6,*) '           '
+      write(6,*) '**** Start  ', 'TIME', TIME(1), 'Gauss point', NPT
+
+!     Recover equivalent plastic strain, elastic strains, and plastic
+!     strains. Also initialize user definde data sets.
+      
+! In user subroutine UMAT it is often necessary to rotate tensors during a finite-strain analysis. The matrix DROT that is passed into UMAT represents the incremental rotation of the material basis system in which the stress and strain are stored. For an elastic-plastic material that hardens isotropically, the elastic and plastic strain tensors must be rotated to account for the evolution of the material directions. In this case S is the elastic or plastic strain tensor and R is the incremental rotation DROT.
+      CALL ROTSIG(STATEV(1), DROT, epsilon_total, 2, NDI, NSHR)
+      CALL ROTSIG(STATEV(1+NTENS), DROT, epsilon_plas, 2, NDI, NSHR)
+      alpha = STATEV(1+2*NTENS) ! equivalent plastic strain
+      write(6,*) 'NDI', NDI, 'NSHR', NSHR
+      write(6,*) 'DROT', DROT
+      write(6,*) 'epsilon_total', epsilon_total
+      write(6,*) 'epsilon_plas', epsilon_plas
+      
+! Material Properties
+! PROPS corresponds to constants= term in inp file dev_strain.g. *User Material, constants=4
+      E = PROPS(1) ! Young's modulus
+      poisson_ratio = PROPS(2) ! poisson ratio
+      E_T = PROPS(3)
+      sigma_0 = PROPS(4)
+      H = (E*E_T)/(E-E_T)
+      kappa_ = E/(3.*(1.-2.*poisson_ratio))
+      mu_ = E/(2.*(1.+poisson_ratio))
+
+! initialize vectors and matrices
+      do i=1,NTENS
+        do j=1,NTENS
+          if (i==j) then
+            I_mat(i,j)=1.0
+          else
+            I_mat(i,j)=0.0
+          end if
+        end do
+      end do
+      I_mat(NTENS,NTENS) = 0.5
+      write(6,*) 'I_mat', I_mat
+      
+      do i=1,NDI
+          one_vec(i)=1.0
+      end do
+      one_vec(NTENS)=0.0
+      write(6,*) 'one_vec', one_vec
+
+! calculate DDSDDE matrix
+      do i=1,NTENS
+        do j=1,NTENS
+          DDSDDE(i,j) = 0.0
+        end do
+      end do
+      D_E_COEFF = E/((1.+poisson_ratio)*(1.-2.*poisson_ratio))
+      DDSDDE(1,1) = D_E_COEFF*(1.-poisson_ratio)
+      DDSDDE(1,2) = D_E_COEFF*poisson_ratio
+      DDSDDE(1,3) = D_E_COEFF*poisson_ratio
+      DDSDDE(2,1) = D_E_COEFF*poisson_ratio
+      DDSDDE(2,2) = D_E_COEFF*(1.-poisson_ratio)
+      DDSDDE(2,3) = D_E_COEFF*poisson_ratio
+      DDSDDE(3,1) = D_E_COEFF*poisson_ratio
+      DDSDDE(3,2) = D_E_COEFF*poisson_ratio
+      DDSDDE(3,3) = D_E_COEFF*(1.-poisson_ratio)
+      DDSDDE(4,4) = D_E_COEFF*(1.-2.*poisson_ratio)/2.
+
+! compute total strain at time n+1
+      do i=1,NTENS
+        epsilon_total(i) = epsilon_total(i) + DSTRAN(i)
+      end do
+      write(6,*) 'DSTRAN', DSTRAN
+      
+!! compute trial elastic state
+      
+! compute dev_strain at time n+1
+      Theta = (epsilon_total(1)+epsilon_total(2)+epsilon_total(3)) ! Theta at time n+1
+      do i=1,NTENS
+        dev_strain(i) = epsilon_total(i) - (Theta/3.0)*one_vec(i)
+      end do
+      write(6,*) 'dev_strain', dev_strain
+! compute deviatoric stress at time n+1
+      do i=1,NTENS
+        dev_stress(i) = 2.*mu_*(dev_strain(i) - epsilon_plas(i))
+      end do
+      write(6,*) 'dev_stress', dev_stress
+      
+! compute von-mises stress at time n+1
+      dev_stress_norm = sqrt(dev_stress(1)**2 + dev_stress(2)**2 + dev_stress(3)**2 + 2.0*dev_stress(4)**2)
+      write(6,*) 'dev_stress_norm', dev_stress_norm
+      
+! compute sigma at time n+1
+!      do i=1,NTENS
+!        STRESS(i) = dev_stress(i) + kappa_*Theta*one_vec(i)
+!      end do
+      DO K1=1, NTENS
+        DO K2=1, NTENS
+          STRESS(K2)=STRESS(K2)+DDSDDE(K2, K1)*DSTRAN(K1)
+        END DO
+!        EELAS(K1)=EELAS(K1)+DSTRAN(K1)
+      END DO
+      
+! check the yield condition
+      sigma_y = sigma_0 + H*alpha
+      f = dev_stress_norm/sqrt(2.0) - sigma_y/sqrt(3.0)
+      TOLER =1e-5
+      write(6,*) 'f', f
+      if (f > TOLER) then
+          delta_gamma = f/(mu_+H/3.0) ! for linear isotropic strain hardening
+
+! compute normal to yield surface df/dsigma
+          do i=1,NDI
+            normal_to_yield_surf(i) = dev_stress(i)/(sqrt(2.0)*dev_stress_norm)
+          end do
+          normal_to_yield_surf(NTENS) = 2.0*dev_stress(NTENS)/(sqrt(2.0)*dev_stress_norm)
+          write(6,*) 'normal_to_yield_surf', normal_to_yield_surf
+          
+! update plastic strain, equivalent plastic strain and stress
+          do i=1,NTENS
+            !temp1 = 0.0
+            !do k=1,NTENS
+            !  temp1=temp1 + I_mat(i,k)*normal_to_yield_surf(k)
+            !end do
+            epsilon_plas(i) = epsilon_plas(i) + delta_gamma*normal_to_yield_surf(i)
+          end do
+          
+! compute equivalent plastic strain at time n+1
+          alpha = alpha + delta_gamma/sqrt(3.0) ! alpha at time n+1
+          
+! compute sigma at time n+1
+          do i=1,NTENS
+            temp2 = 0.0
+            do k=1,NTENS
+              temp2=temp2 + I_mat(i,k)*normal_to_yield_surf(k)
+            end do
+            STRESS(i) = STRESS(i) - 2.*mu_*delta_gamma*temp2
+          end do
+          
+! compute elastic plastic tangent modulus DDSDDE
+          xi_ = 1.0-sqrt(2.0)*mu_*delta_gamma/dev_stress_norm
+          xi_tilde = -(1.0-xi_)+1.0/(1.0+H/(3.0*mu_))
+
+          do i=1, NTENS
+            do j=1,NTENS
+              temp3 = 0.0
+              temp4 = 0.0
+              do k=1,NTENS
+                temp3 = temp3 + I_mat(i,k)*normal_to_yield_surf(k)
+                temp4 = temp4 + I_mat(j,k)*normal_to_yield_surf(k)
+              end do
+              DDSDDE(i,j) = kappa_*one_vec(i)*one_vec(j) + 2.*mu_*xi_*(I_mat(i,j)-(1./3.)*one_vec(i)*one_vec(j)) - 4.*mu_*xi_tilde*temp3*temp4
+            end do
+          end do
+          
+          
+      end if
+!
+!     Store updated state variables
+!
+      DO i=1, NTENS
+        STATEV(i) = epsilon_total(i) ! total strain
+        STATEV(i+NTENS) = epsilon_plas(i) ! plastic strain vector
+      END DO
+      STATEV(1+2*NTENS) = alpha ! equivalent plastic strain
+      STATEV(2+2*NTENS) = sigma_y ! yield stress
+      
+      write(6,*) 'DDSDDE', DDSDDE
+      return
+      end
+      

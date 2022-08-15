@@ -1,0 +1,709 @@
+! User material subroutine
+! Elasto - plasticity in continuum
+! Author: Prafull Bhosale,
+!         M.Tech Design Engineering,
+!         Department of Mechanical Engineering,
+!         Indian Institute of Technology, Bombay
+      SUBROUTINE UMAT(STRESS, STATEV, DDSDDE, SSE, SPD, SCD, RPL,DDSDDT, DRPLDE, DRPLDT, STRAN, DSTRAN, TIME, DTIME, TEMP,DTEMP, PREDEF, DPRED, CMNAME, NDI, NSHR, NTENS, NSTATV,PROPS, NPROPS, COORDS, DROT, PNEWDT, CELENT, DFGRD0,DFGRD1, NOEL, NPT, LAYER, KSPT, KSTEP, KINC)
+!
+      INCLUDE 'ABA_PARAM.INC'
+!
+      CHARACTER*80 CMNAME
+! 
+      DIMENSION STRESS(NTENS), STATEV(NSTATV),DDSDDE(NTENS, NTENS),DDSDDT(NTENS),DRPLDE(NTENS),STRAN(NTENS),DSTRAN(NTENS),TIME(2),PREDEF(1), DPRED(1), PROPS(NPROPS),COORDS(3),DROT(3, 3), DFGRD0(3, 3), DFGRD1(3, 3)
+
+      DIMENSION dev_strain(NTENS), dev_stress(NTENS), norm_yield_surf(NTENS), epsilon_total(NTENS), epsilon_plas(NTENS), I_mat(NTENS,NTENS), one_vec(NTENS)
+      
+      DIMENSION AUX0(NTENS), AUX1(NTENS), AUX2(NTENS), AUX3(NTENS), AUX4(NTENS, NTENS), AUX5(NTENS, NTENS), AUX6(NTENS, NTENS),AUX6_tran(NTENS, NTENS), AUX7(NTENS, NTENS)
+      
+! code starts
+      CALL KCLEARV(epsilon_total,NTENS)
+      CALL KCLEARV(epsilon_plas,NTENS)      
+      
+      write(6,*) '****Yugandhara', 'TIME', TIME, 'Gauss point', NPT, 'NTENS', NTENS, 'NSTATV', NSTATV,'NPROPS', NPROPS
+      write(6,*) 'STATEV', STATEV
+
+!     Recover equivalent plastic strain, elastic strains, and plastic
+!     strains. Also initialize user definde data sets.
+      DO i=1, NTENS
+        epsilon_total(i)=STATEV(i) ! total strain
+        epsilon_plas(i)=STATEV(i+NTENS) ! plastic strain vector
+      END DO
+      alpha = STATEV(1+2*NTENS) ! equivalent plastic strain
+      
+! Material Properties
+! PROPS corresponds to constants= term in inp file dev_strain.g. *User Material, constants=4
+      E = PROPS(1) ! Young's modulus
+      poisson_ratio = PROPS(2) ! poisson ratio
+      E_T = PROPS(3)
+      sigma_0 = PROPS(4)
+      H = (E*E_T)/(E-E_T)
+      kappa_ = E/(3.*(1.-2.*poisson_ratio))
+      mu_ = E/(2.*(1.+poisson_ratio))
+      
+! initialize vectors and matrices
+      CALL KCLEAR(I_mat,NTENS,NTENS)
+      CALL KCLEARV(one_vec,NTENS)
+      
+      CALL KIDENTITY(I_mat,NTENS)
+      I_mat(NTENS,NTENS) = 1.0/2.0
+
+      do i=1,NTENS-1
+          one_vec(i)=1.0
+      end do
+
+! calculate DDSDDE matrix
+      D_E_COEFF = E/((1.+poisson_ratio)*(1.-2.*poisson_ratio))
+      CALL KCLEAR(DDSDDE,NTENS,NTENS)
+      DDSDDE(1,1) = D_E_COEFF*(1.-poisson_ratio)
+      DDSDDE(1,2) = D_E_COEFF*poisson_ratio
+      DDSDDE(1,3) = D_E_COEFF*poisson_ratio
+      DDSDDE(2,1) = D_E_COEFF*poisson_ratio
+      DDSDDE(2,2) = D_E_COEFF*(1.-poisson_ratio)
+      DDSDDE(2,3) = D_E_COEFF*poisson_ratio
+      DDSDDE(3,1) = D_E_COEFF*poisson_ratio
+      DDSDDE(3,2) = D_E_COEFF*poisson_ratio
+      DDSDDE(3,3) = D_E_COEFF*(1.-poisson_ratio)
+      DDSDDE(4,4) = D_E_COEFF*(1.-2.*poisson_ratio)/2.
+      
+! compute total strain at time n+1
+      CALL KCLEARV(epsilon_total,NTENS)
+      CALL KUPDVEC(epsilon_total,NTENS,STRAN)
+      CALL KUPDVEC(epsilon_total,NTENS,DSTRAN) ! total strain at time n+1
+      
+! compute trial elastic state
+! compute dev_strain at time n+1
+      Theta = (epsilon_total(1)+epsilon_total(2)+epsilon_total(3))/3.0 ! Theta at time n+1
+      CALL KCLEARV(dev_strain,NTENS)
+      CALL KCLEARV(AUX0,NTENS)
+      CALL KUPDVEC(AUX0,NTENS,one_vec)
+      scalar = Theta/3.0
+      CALL KSMULTV(AUX0,NTENS,scalar) 
+      CALL KVECSUB(epsilon_total,NTENS,AUX0,NTENS,dev_strain,0)! deviatoric strain at time n+1
+      
+! compute deviatoric stress at time n+1
+      CALL KCLEARV(dev_stress,NTENS)
+      CALL KVECSUB(dev_strain,NTENS,epsilon_plas,NTENS,dev_stress,0)
+      scalar = 2.0*mu_
+      CALL KSMULTV(dev_stress,NTENS,scalar)! deviatoric stress at time n+1
+      
+! compute von-mises stress at time n+1
+      SMISES = sqrt(dev_stress(1)**2 + dev_stress(2)**2 + dev_stress(3)**2 + 2.0*dev_stress(4)**2)
+
+! compute sigma at time n+1     
+      CALL KCLEARV(AUX3,NTENS)
+      CALL KUPDVEC(AUX3,NTENS,one_vec)
+      scalar = kappa_*Theta
+      CALL KSMULTV(AUX3,NTENS,scalar)
+
+      CALL KUPDVEC(STRESS,NTENS,dev_stress)
+      CALL KUPDVEC(STRESS,NTENS,AUX3)
+      write(6,*) 'STRESS', STRESS
+      
+! check the yield condition
+      sigma_y = sigma_0 + H*alpha
+      f = (1.0/sqrt(2.0))*SMISES - (1.0/sqrt(3.0))*sigma_y
+      write(6,*) 'f', f
+      
+      if (f > 0.0) then
+          write(6,*) 'plastic step starts'
+          delta_gamma = f/(mu_+H/3.0) ! for linear isotropic strain hardening
+
+! compute normal to yield surface df/dsigma
+          CALL KCLEARV(norm_yield_surf,NTENS)
+          CALL KUPDVEC(norm_yield_surf,NTENS,dev_stress)
+          norm_yield_surf(NTENS) = norm_yield_surf(NTENS)*2.0
+          scalar = 1.0/(sqrt(2.0)*SMISES)
+          CALL KSMULTV(norm_yield_surf,NTENS,scalar)
+          
+! update plastic strain, equivalent plastic strain and stress
+          CALL KCLEARV(AUX1,NTENS)
+          CALL KUPDVEC(AUX1,NTENS,norm_yield_surf) 
+          CALL KSMULTV(AUX1,NTENS,delta_gamma)
+          CALL KUPDVEC(epsilon_plas,NTENS,AUX1) ! plastic strain at time n+1
+          
+! compute equivalent plastic strain at time n+1
+          alpha = alpha + delta_gamma/sqrt(3.0) ! alpha at time n+1
+          
+! compute sigma at time n+1
+          CALL KCLEARV(AUX2,NTENS)
+          CALL KMAVEC(I_mat,NTENS,NTENS,norm_yield_surf,AUX2)
+          scalar = -2.0*mu_
+          CALL KSMULTV(AUX2,NTENS,scalar)
+          
+          CALL KUPDVEC(STRESS,NTENS,AUX2)
+          
+! compute elastic plastic tangent modulus DDSDDE
+          CALL KCLEAR(AUX4,NTENS,NTENS)
+          CALL KCLEAR(AUX5,NTENS,NTENS)
+          ! AUX4 = kappa*{1}*{1}.T
+          do i=1,NTENS-1
+            do j=1,NTENS-1
+              AUX4(i,j)=1.0
+              AUX5(i,j)=1.0
+            end do
+          end do
+          CALL KSMULT(AUX4,NTENS,NTENS,kappa_)
+          
+          scalar = -1.0/3.0
+          CALL KSMULT(AUX5,NTENS,NTENS,scalar)
+          CALL KUPDMAT(AUX5,NTENS,NTENS,I_mat)
+          xi_ = 1.0-sqrt(2.0)*mu_*delta_gamma/SMISES
+          scalar = 2*mu_*xi_
+          CALL KSMULT(AUX5,NTENS,NTENS,scalar)
+          
+          CALL KCLEAR(AUX6,NTENS,NTENS)
+          CALL KCLEAR(AUX6_tran,NTENS,NTENS)
+          CALL KCLEAR(AUX7,NTENS,NTENS)
+          CALL KMAVEC(I_mat,NTENS,NTENS,norm_yield_surf,AUX6)
+          CALL KMTRAN(AUX6,NTENS,NTENS,AUX6_tran)
+          CALL KMMULT(AUX6,NTENS,NTENS,AUX6_tran,NTENS,NTENS,AUX7)
+          xi_tilde = -(1.0-xi_)+1.0/(1.0+H/(3*mu_))   
+          scalar = -4*mu_*xi_tilde
+          CALL KSMULT(AUX7,NTENS,NTENS,scalar)
+          
+          CALL KCLEAR(DDSDDE,NTENS,NTENS)
+          CALL KUPDMAT(DDSDDE,NTENS,NTENS,AUX4)
+          CALL KUPDMAT(DDSDDE,NTENS,NTENS,AUX5)
+          CALL KUPDMAT(DDSDDE,NTENS,NTENS,AUX7)
+          
+          write(6,*) 'plastic step ends'
+      end if
+!
+!     Store updated state variables
+!
+      DO i=1, NTENS
+        STATEV(i) = epsilon_total(i) ! total strain
+        STATEV(i+NTENS) = epsilon_plas(i) ! plastic strain vector
+      END DO
+      STATEV(1+2*NTENS) = alpha ! equivalent plastic strain
+      write(6,*) 'STATEV', STATEV
+      write(6,*) 'DDSDDE', DDSDDE
+      write(6,*) 'Yugandhara going to Germany'
+      return
+      end
+
+
+!
+!CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+!                                                                      C
+!             M A T R I X   H A N D L I N G                            C
+!-------------U T I L I T I E S   B L O C K--------------              C
+!                                                                      C
+!CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+!23456789012345678901234567890123456789012345678901234567890123456789012
+!23456789012345678901234567890123456789012345678901234567890123456789012
+!                                                                      C
+!      SUBROUTINE KCLEAR(A,N,M)                                        C
+!      Clear a real matrix                                             C
+!                                                                      C
+!CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+!23456789012345678901234567890123456789012345678901234567890123456789012
+      SUBROUTINE KCLEAR(A,N,M)
+!
+      IMPLICIT REAL*8(A-H,O-Z)
+!
+      PARAMETER(ZERO=0.0D0)
+      DIMENSION A(N,M)
+!
+      DO I=1,N
+        DO J=1,M
+          A(I,J)=ZERO
+        END DO
+      END DO
+!
+      RETURN
+!
+      END
+!CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+!23456789012345678901234567890123456789012345678901234567890123456789012
+!                                                                      C
+!      SUBROUTINE KMMULT(A,NRA,NCA,B,NRB,NCB,C)                        C
+!      Real matrix product                                             C
+!                                                                      C
+!CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+!23456789012345678901234567890123456789012345678901234567890123456789012
+      SUBROUTINE KMMULT(A,NRA,NCA,B,NRB,NCB,C)
+!
+      IMPLICIT REAL*8 (A-H,O-Z)
+!
+      PARAMETER(ZERO=0.D0)
+      DIMENSION A(NRA,NCA),B(NRB,NCB),C(NRA,NCB)
+!
+      CALL KCLEAR(C,NRA,NCB)
+      DUM=ZERO
+      DO I=1,NRA
+        DO J=1,NCB
+         DO K=1,NCA
+           DUM=DUM+A(I,K)*B(K,J)
+          END DO
+          C(I,J)=DUM
+          DUM=ZERO
+        END DO
+      END DO
+!
+      RETURN
+!
+      END
+!CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+!23456789012345678901234567890123456789012345678901234567890123456789012
+!                                                                      C
+!      SUBROUTINE KSMULT(A,NR,NC,S)                                    C
+!      Matrix times a scalar.                                          C
+!                                                                      C
+!CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+!23456789012345678901234567890123456789012345678901234567890123456789012
+      SUBROUTINE KSMULT(A,NR,NC,S)
+!
+      IMPLICIT REAL*8 (A-H,O-Z)
+!
+      DIMENSION A(NR,NC)
+!
+      DO I=1,NR
+        DO J=1,NC
+          DUM=A(I,J)
+          A(I,J)=S*DUM
+          DUM=0.D0
+        END DO  
+      END DO
+!
+      RETURN
+!
+      END
+!CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+!23456789012345678901234567890123456789012345678901234567890123456789012
+!                                                                      C
+!      SUBROUTINE KSMULTV(A,NR,S)                                    C
+!      Vector times a scalar.                                          C
+!                                                                      C
+!CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+!23456789012345678901234567890123456789012345678901234567890123456789012
+      SUBROUTINE KSMULTV(A,NR,S)
+!
+      IMPLICIT REAL*8 (A-H,O-Z)
+!
+      DIMENSION A(NR)
+!
+      DO J=1,NR
+        DUM=A(J)
+        A(J)=S*DUM
+        DUM=0.0
+      END DO  
+!
+      RETURN
+!
+      END
+!CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+!23456789012345678901234567890123456789012345678901234567890123456789012
+!                                                                      C
+!      SUBROUTINE KUPDMAT(A,NR,NC,B)                                   C
+!      Updates an existing matrix with an incremental matrix.          C
+!                                                                      C
+!CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+!23456789012345678901234567890123456789012345678901234567890123456789012
+      SUBROUTINE KUPDMAT(A,NR,NC,B)
+!
+      IMPLICIT REAL*8 (A-H,O-Z)
+!
+      PARAMETER(ZERO=0.D0)
+!
+      DIMENSION A(NR,NC),B(NR,NC)
+!
+      DO I=1,NR
+        DO J=1,NC
+          DUM=A(I,J)
+          A(I,J)=ZERO
+          A(I,J)=DUM+B(I,J)
+          DUM=ZERO
+        END DO
+      END DO
+!
+      RETURN
+!
+      END
+!CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+!23456789012345678901234567890123456789012345678901234567890123456789012
+!                                                                      C
+!      SUBROUTINE KMTRAN(A,NRA,NCA,B)                                  C      
+!      Matrix transpose                                                C
+!                                                                      C
+!CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+!23456789012345678901234567890123456789012345678901234567890123456789012
+      SUBROUTINE KMTRAN(A,NRA,NCA,B)
+!
+      IMPLICIT REAL*8 (A-H,O-Z)
+!
+      DIMENSION A(NRA,NCA),B(NCA,NRA)
+!
+      CALL KCLEAR(B,NCA,NRA)
+      DO I=1,NRA
+       DO J=1,NCA
+         B(J,I)=A(I,J)
+        END DO
+      END DO
+!
+      RETURN
+!
+      END
+!CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+!23456789012345678901234567890123456789012345678901234567890123456789012
+!                                                                      C
+!      SUBROUTINE KMAVEC(A,NRA,NCA,B,C)                                C
+!      Real matrix times vector                                        C
+!                                                                      C
+!CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+!23456789012345678901234567890123456789012345678901234567890123456789012
+      SUBROUTINE KMAVEC(A,NRA,NCA,B,C)
+!
+      IMPLICIT REAL*8 (A-H,O-Z)
+!
+      PARAMETER(ZERO=0.D0)
+      DIMENSION A(NRA,NCA),B(NCA),C(NRA)
+!
+      CALL KCLEARV(C,NRA)
+!
+      DO K1=1,NRA
+        DO K2=1,NCA
+          C(K1)=C(K1)+A(K1,K2)*B(K2)	    
+        END DO
+      END DO     
+!
+      RETURN
+!
+      END
+!CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+!23456789012345678901234567890123456789012345678901234567890123456789012
+!                                                                      C
+!      SUBROUTINE KCLEARV(A,N)                                         C
+!      Clear a real vector                                             C
+!                                                                      C
+!CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+!23456789012345678901234567890123456789012345678901234567890123456789012
+      SUBROUTINE KCLEARV(A,N)
+!
+      IMPLICIT REAL*8(A-H,O-Z)
+!
+      PARAMETER(ZERO=0.0D0)
+!
+      DIMENSION A(N)
+!
+      DO I=1,N
+        A(I)=ZERO
+      END DO
+!
+      RETURN
+!
+      END
+!CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+!23456789012345678901234567890123456789012345678901234567890123456789012
+!                                                                      C
+!      SUBROUTINE KUPDVEC(A,NR,B)                                      C
+!      Updates an existing vector with an incremental vector.          C
+!                                                                      C
+!CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+!23456789012345678901234567890123456789012345678901234567890123456789012
+      SUBROUTINE KUPDVEC(A,NR,B)
+!
+      IMPLICIT REAL*8 (A-H,O-Z)
+!
+      PARAMETER(ZERO=0.D0)
+!
+      DIMENSION A(NR),B(NR)
+!
+      DO I=1,NR
+        DUM=A(I)
+        A(I)=ZERO
+        A(I)=DUM+B(I)
+        DUM=ZERO
+      END DO
+!
+      RETURN
+!
+      END
+!
+!CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+!23456789012345678901234567890123456789012345678901234567890123456789012
+!                                                                      C
+!      SUBROUTINE KVECSUB(A,NRA,B,NRB,C)                               C
+!      Substracts one column vector from another column vector         C
+!      IFLAG=0 for substraction                                        C
+!      IFLAG=1 for addition                                            C
+!                                                                      C
+!CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+!23456789012345678901234567890123456789012345678901234567890123456789012
+      SUBROUTINE KVECSUB(A,NRA,B,NRB,C,IFLAG)
+!
+      IMPLICIT REAL*8(A-H,O-Z)
+!
+      PARAMETER (ONE=1.0D0, ONENEG=-1.0D0)
+!
+      DIMENSION A(NRA,1),B(NRB,1),C(NRB,1)
+!
+      SCALAR=ONENEG
+!
+      IF (IFLAG.EQ.1) SCALAR=ONE
+!
+      DO I=1,NRA
+        C(I,1)=A(I,1)+B(I,1)*SCALAR
+      END DO
+!
+      RETURN
+!
+      END
+!
+!CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+!23456789012345678901234567890123456789012345678901234567890123456789012
+!                                                                      C
+!      SUBROUTINE KMATSUB(A,NRA,NCA,B,C,IFLAG)                         C
+!      Substracts one rectangular matrix from another rectangular      C
+!      matrix                                                          C
+!      IFLAG=0 for substraction                                        C
+!      IFLAG=1 for addition                                            C
+!                                                                      C
+!CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+!23456789012345678901234567890123456789012345678901234567890123456789012
+      SUBROUTINE KMATSUB(A,NRA,NCA,B,C,IFLAG)
+!
+      IMPLICIT REAL*8(A-H,O-Z)
+!
+      PARAMETER (ONE=1.0D0, ONENEG=-1.0D0)
+!
+      DIMENSION A(NRA,NCA),B(NRA,NCA),C(NRA,NCA)
+!
+      CALL KCLEAR(C,NRA,NCA)
+!
+      SCALAR=ONENEG
+!
+      IF (IFLAG.EQ.1) SCALAR=ONE
+!
+      DO I=1,NRA
+        DO J=1,NCA
+          C(I,J)=A(I,J)+B(I,J)*SCALAR
+        END DO
+      END DO
+!
+      RETURN
+!
+      END
+!
+!
+!11111111122222222223333333333444444444455555555556666666666777777777777
+!23456789012345678901234567890123456789012345678901234567890123456789012
+!                                                                      C
+!     SUBROUTINE IDENTITY                                              C
+!     CREATES AN IDENTITY MATRIX OF DIMENSIONS NDIM,NDIM               C
+!                                                                      C
+!23456789012345678901234567890123456789012345678901234567890123456789012
+!CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+!
+      SUBROUTINE KIDENTITY(DEL,NDIM)
+!
+      IMPLICIT REAL*8(A-H,O-Z)
+!
+      PARAMETER(ONE=1.D0)
+!
+      DIMENSION DEL(NDIM,NDIM)
+!
+      CALL KCLEAR(DEL,NDIM,NDIM)
+!
+      DO K1=1,NDIM
+        DEL(K1,K1)=ONE
+      END DO
+!
+      RETURN
+!
+      END
+!
+!CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+!23456789012345678901234567890123456789012345678901234567890123456789012
+!CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+!                                                                      C
+!   SUBROUTINE KINVERSE                                                 C
+!                                                                      C
+!   IVEERSE OF A MATRIX USING LU DECOMPOSITION                         C
+!   TAKEN FROM NUMERICAL RECIPES By Press et al                        C
+!                                                                      C
+!   A   Matrix to be inverted.                                         C
+!   Y   Inverse of A                                                   C
+!   N   Dimension                                                      C
+!                                                                      C
+!                                                                      C
+!                                                                      C
+!CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+!23456789012345678901234567890123456789012345678901234567890123456789012
+!
+      SUBROUTINE KINVERSE(A,Y,NP,N)
+!
+      IMPLICIT REAL*8(A-H,O-Z)
+!
+      PARAMETER (ZERO=0.D0,ONE=1.D0)
+!
+      DIMENSION A(NP,NP),Y(NP,NP),INDX(NP),AUX(NP,NP)
+!
+      CALL KCLEAR(AUX,NP,NP)
+      CALL KCOPYMAT(A,AUX,N)
+!
+      DO I=1,N
+        DO J=1,N
+          Y(I,J)=ZERO
+        END DO
+        Y(I,I)=ONE
+      END DO
+      CALL KLUDCMP(AUX,N,NP,INDX,D)
+      DO J=1,N
+        CALL KLUBKSB(AUX,N,NP,INDX,Y(1,J))
+      END DO
+!
+      RETURN
+!
+      END
+!
+!CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+!23456789012345678901234567890123456789012345678901234567890123456789012
+!CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+!                                                                      C
+!   SUBROUTINE KLUDCMP                                                 C
+!                                                                      C
+!   LU MATRIX DECOMPOSITION                                            C
+!   TAKEN FROM NUMERICAL RECIPES By Press et al                        C
+!                                                                      C
+!                                                                      C
+!                                                                      C
+!CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+!23456789012345678901234567890123456789012345678901234567890123456789012
+!
+      SUBROUTINE KLUDCMP(A,N,NP,INDX,D)
+!
+      IMPLICIT REAL*8(A-H,O-Z)
+!
+      PARAMETER(NMAX=500,TINY=1.0E-20,ZERO=0.D0,ONE=1.D0)
+!
+      DIMENSION INDX(N),A(NP,NP),VV(NMAX)
+!
+      D=ONE
+      DO I=1,N
+        AAMAX=ZERO
+        DO J=1,N
+          IF(ABS(A(I,J)).GT.AAMAX) AAMAX=ABS(A(I,J))
+        END DO
+        IF(AAMAX.EQ.0.) PAUSE 'SINGULAR MATRIX IN LUDCMP'
+        VV(I)=ONE/AAMAX
+      END DO
+!
+      DO J=1,N
+        DO I=1,J-1
+          SUM=A(I,J)
+          DO K=1,I-1
+            SUM=SUM-A(I,K)*A(K,J)
+          END DO
+          A(I,J)=SUM
+        END DO
+        AAMAX=ZERO
+        DO I=J,N
+          SUM=A(I,J)
+          DO K=1,J-1
+            SUM=SUM-A(I,K)*A(K,J)
+          END DO
+          A(I,J)=SUM
+          DUM=VV(I)*ABS(SUM)
+          IF(DUM.GE.AAMAX) THEN
+             IMAX=I
+             AAMAX=DUM
+          END IF
+        END DO
+        IF(J.NE.IMAX) THEN
+           DO K=1,N
+             DUM=A(IMAX,K)
+             A(IMAX,K)=A(J,K)
+             A(J,K)=DUM
+           END DO
+           D=-D
+           VV(IMAX)=-VV(J)
+        END IF
+        INDX(J)=IMAX
+        IF(A(J,J).EQ.0.) A(J,J)=TINY
+        IF(J.NE.N) THEN
+           DUM=ONE/A(J,J)
+           DO I=J+1,N
+             A(I,J)=A(I,J)*DUM
+           END DO
+        END IF
+      END DO
+!
+      RETURN
+!
+      END
+!
+!CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+!23456789012345678901234567890123456789012345678901234567890123456789012
+!CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+!                                                                      C
+!   SUBROUTINE KLUBKSB                                                 C
+!                                                                      C
+!   FORWARD SUBSTITUTION                                               C
+!   TAKEN FROM NUMERICAL RECIPES By Press et al                        C
+!                                                                      C
+!                                                                      C
+!                                                                      C
+!CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+!23456789012345678901234567890123456789012345678901234567890123456789012
+!
+      SUBROUTINE KLUBKSB(A,N,NP,INDX,B)
+!
+      IMPLICIT REAL*8(A-H,O-Z)
+!
+      PARAMETER (ZERO=0.D0)
+!
+      DIMENSION INDX(N),A(NP,NP),B(NP)
+!
+      II=0
+      DO I=1,N
+        LL=INDX(I)
+        SUM=B(LL)
+        B(LL)=B(I)
+        IF(II.NE.0) THEN
+           DO J=II,I-1
+             SUM=SUM-A(I,J)*B(J)
+           END DO
+        ELSE IF(SUM.NE.ZERO) THEN
+           II=I
+        END IF
+        B(I)=SUM
+      END DO
+!
+      DO I=N,1,-1
+        SUM=B(I)
+        DO J=I+1,N
+          SUM=SUM-A(I,J)*B(J)
+        END DO
+        B(I)=SUM/A(I,I)
+      END DO
+!
+      RETURN
+!
+      END
+!
+!CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+!23456789012345678901234567890123456789012345678901234567890123456789012
+!                                                                      C
+!     SUBROUTINE KCOPYMAT                                              C
+!                                                                      C
+!CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+!
+      SUBROUTINE KCOPYMAT(A,B,N)
+!
+      IMPLICIT REAL*8(A-H,O-Z)
+!
+      DIMENSION A(N,N),B(N,N)
+!
+      CALL KCLEAR(B,N,N)
+!
+      DO K1=1,N
+        DO K2=1,N
+          B(K1,K2)=A(K1,K2)
+        END DO
+      END DO
+!
+      RETURN
+!
+      END

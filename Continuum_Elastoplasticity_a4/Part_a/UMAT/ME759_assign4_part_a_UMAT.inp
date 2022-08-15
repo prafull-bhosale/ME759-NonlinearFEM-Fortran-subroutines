@@ -1,0 +1,62 @@
+*Node
+1,0.,0.
+2,1.,0.
+3,1.,1.
+4,0.,1.
+*Element, Type = CPE4, Elset=All_elems
+1,1,2,3,4
+*Solid Section, Elset=All_elems, material = MAT1
+,
+*Material, Name=MAT2
+*Elastic, Type=Isotropic
+1000.,0.3
+*Material, Name=MAT1
+*Depvar
+6,
+*User Material, constants=4
+**  E, nu,  E_t, sigma_0
+1000., 0.3, 100.,      1.
+*Surface, type=ELEMENT, name=TOP_EDGE
+All_elems, S3
+**************STEP: Step-1*************************
+***************************************************
+**
+*Step, INC=10000000, name=Step-1
+*Static,direct
+0.01,11.0
+*AMPLITUDE,NAME=load,INPUT=D:\MTechDesign\Sem4\ME759_NonlinearFEM\Codes\Assignment4\Part_a\UMAT\load.csv
+***************************************************
+** BOUNDARY CONDITIONS
+** 
+** Name: BC-1 Type: Displacement/Rotation
+*Boundary
+1,1,2
+2,2
+**
+**
+*PRINT,FREQUENCY=1
+**************LOADS************************
+*******************************************
+**ACTIVATE THIS LINE FOR FORC. CONTROLLED**
+*******************************************
+*Dsload, amplitude=load
+TOP_EDGE, TRVEC, 1., 0., 1., 0.
+** 
+*MONITOR, NODE=3,DOF=2
+**
+** CONTROLS
+** 
+*Controls, reset
+*Controls, parameters=time incrementation
+, , , , , , , 100, , , 
+******************************************
+******* OUTPUT REQUEST*********************
+*******************************************
+**********************
+***stress-strains*****
+**********************
+*Output, Field
+*ELEMENT OUTPUT, ELSET=All_elems
+S,E,EE,PE,PEEQ,SDV
+**
+*End Step

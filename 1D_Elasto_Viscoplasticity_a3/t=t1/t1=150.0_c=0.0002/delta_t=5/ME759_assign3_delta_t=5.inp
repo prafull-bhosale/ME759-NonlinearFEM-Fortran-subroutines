@@ -1,0 +1,52 @@
+*Node
+1,0.,0.,0.
+2,0.75,0.,0.
+3,1.,0.,0.
+*Element, Type = T2D3, Elset=bar
+1,1,2,3
+*Solid Section, Elset=bar, material = "t=t1"
+1.,
+*Material, Name=MAT2
+*Elastic, Type=Isotropic
+1000.,0.3
+*Material, Name="t=t1"
+*Depvar
+5,
+*User Material, constants=6
+**  E,  E_t, sigma_0, theta,    eta, strain rate
+1000., 40.,      1.,     1., 2000.,       0.0002
+**************STEP: Step-1*************************
+***************************************************
+**
+*Step,nlgeom=YES, name=Step-1
+*Static,direct
+** delta_t = epsilon_0/c
+5.,150.
+*AMPLITUDE,NAME=DispAmp,INPUT=DispAmp.csv
+***************************************************
+** BOUNDARY CONDITIONS
+** 
+** Name: BC-1 Type: Displacement/Rotation
+*Boundary
+1,ENCASTRE
+*Boundary, amplitude=DispAmp
+3, 1, 1, 1.
+**
+**
+*PRINT,FREQUENCY=100
+** 
+*MONITOR, NODE=3,DOF=1
+**
+******************************************
+******* OUTPUT REQUEST*********************
+*******************************************
+**********************
+***stress-strains*****
+**********************
+*Output, Field
+*Node Output
+CF, RF, U
+*ELEMENT OUTPUT, ELSET=bar
+S,EE,PE,PEEQ,SDV
+**
+*End Step

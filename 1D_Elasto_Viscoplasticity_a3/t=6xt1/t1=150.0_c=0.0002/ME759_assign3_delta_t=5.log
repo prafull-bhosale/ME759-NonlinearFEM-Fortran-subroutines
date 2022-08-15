@@ -1,0 +1,32 @@
+Analysis initiated from SIMULIA established products
+Abaqus JOB ME759_assign3_delta_t=5
+Abaqus 3DEXPERIENCE R2018x
+Abaqus License Manager checked out the following licenses:
+Abaqus/Standard checked out 5 tokens from Flexnet server localhost.
+<1019 out of 1024 licenses remain available>.
+Begin Compiling Abaqus/Standard User Subroutines
+3/23/2022 2:58:19 PM
+Intel(R) Fortran Intel(R) 64 Compiler Classic for applications running on Intel(R) 64, Version 2021.5.0 Build 20211109_000000
+Copyright (C) 1985-2021 Intel Corporation.  All rights reserved.
+
+End Compiling Abaqus/Standard User Subroutines
+Begin Linking Abaqus/Standard User Subroutines
+   Creating library standardU.lib and object standardU.exp
+End Linking Abaqus/Standard User Subroutines
+3/23/2022 2:58:19 PM
+Begin Analysis Input File Processor
+3/23/2022 2:58:19 PM
+Run pre.exe
+3/23/2022 2:58:22 PM
+End Analysis Input File Processor
+Begin Abaqus/Standard Analysis
+3/23/2022 2:58:22 PM
+Run standard.exe
+3/23/2022 2:58:45 PM
+End Abaqus/Standard Analysis
+Begin Convert MFS to SFS
+3/23/2022 2:58:45 PM
+Run SMASimUtility.exe
+3/23/2022 2:58:45 PM
+End Convert MFS to SFS
+Abaqus JOB ME759_assign3_delta_t=5 COMPLETED

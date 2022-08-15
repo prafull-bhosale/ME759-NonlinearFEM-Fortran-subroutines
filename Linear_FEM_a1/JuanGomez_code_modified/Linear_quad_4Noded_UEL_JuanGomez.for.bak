@@ -1,0 +1,586 @@
+C11111111122222222223333333333444444444455555555556666666666777777777777
+C23456789012345678901234567890123456789012345678901234567890123456789012
+C                                                                      C
+C     UEL9_ECLA.for    4-Noded Classical Elasticity                    C
+C     GENERAL FINITE ELEMENT LIBRARY TO BE USED WITHIN ABAQUS          C
+C     UNIVERSIDAD EAFIT                                                C
+C     LABORATORIO DE MECANICA APLICADA                                 C
+C     BLOQUE 14-PISO 2                                                 C
+C     MEDELLIN, COLOMBIA                                               C
+C                                                                      C
+C     LAST UPDATED APRIL 16/2015                                       C
+C                                                                      C
+C     CURRENTLY:                                                       C
+C                                                                      C
+C     4 noded ISOPARAMETRIC PURE DISPLACEMENT ELEMENT                  C
+C                                                                      C
+C----------------------------------------------------------------------C
+C                                                                      C
+C----------------------------------------------------------------------C
+C23456789012345678901234567890123456789012345678901234567890123456789012
+CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+C11111111122222222223333333333444444444455555555556666666666777777777777
+C23456789012345678901234567890123456789012345678901234567890123456789012
+C                                                                      C
+C       --U S E R   E L E M E N T    S U B R O U T I N E S---          C
+C                                                                      C
+C23456789012345678901234567890123456789012345678901234567890123456789012
+CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+C23456789012345678901234567890123456789012345678901234567890123456789012
+C                                                                      C
+C  USER ELEMENT SUBROUTINE- ELASTIC MATERIAL BEHAVIOR                  C
+C                                                                      C
+C  4 noded ISOPARAMETRIC SOLID ELEMENT                                 C
+C  2X2 GAUSS INTEGRATION                                               C
+C                                                                      C
+C  CREATED BY JUAN GOMEZ                                               C
+C                                                                      C
+C                                                                      C
+CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+C23456789012345678901234567890123456789012345678901234567890123456789012
+C
+      SUBROUTINE UEL(RHS,AMATRX,SVARS,ENERGY,NDOFEL,NRHS,NSVARS,
+     1PROPS,NPROPS,COORDS,MCRD,NNODE,U,DU,V,A,JTYPE,TIME,DTIME,
+     2KSTEP,KINC,JELEM,PARAMS,NDLOAD,JDLTYP,ADLMAG,PREDEF,
+     3NPREDF,LFLAGS,MLVARX,DDLMAG,MDLOAD,PNEWDT,JPROPS,NJPROP,
+     4PERIOD)
+C     
+      INCLUDE 'ABA_PARAM.INC'
+C
+      CHARACTER*80 CMNAME
+C  
+      PARAMETER (ZERO=0.D0,HALF=0.5D0,ONE=1.D0,NTENS=4,TWO=2.D0,
+     1           THREE=3.D0)
+C
+C     Parameters required by UMAT.f
+C
+      PARAMETER (NDI=3,NSTATV=14,SSE=0.D0,SCD=0.D0,
+     1           RPL=0.D0,DRPLDT=0.D0,TEMP=0.D0,DTEMP=0.D0,NSHR=1,
+     2           CELENT=2.D0,LAYER=1,KSPT=1)
+C
+C     Parameter arrays from UEL.f
+C
+      DIMENSION RHS(MLVARX,*),AMATRX(NDOFEL,NDOFEL),
+     1SVARS(NSVARS),ENERGY(8),PROPS(*),COORDS(MCRD,NNODE),
+     2U(NDOFEL),DU(MLVARX,*),V(NDOFEL),A(NDOFEL),TIME(2),
+     3PARAMS(3),JDLTYP(MDLOAD,*),ADLMAG(MDLOAD,*),
+     4DDLMAG(MDLOAD,*),PREDEF(2,NPREDF,NNODE),LFLAGS(*),
+     5JPROPS(*)
+C
+C     User defined arrays
+C
+      DIMENSION B(NTENS,NDOFEL),BT(NDOFEL,NTENS),BLM(1,NDOFEL),
+     1BLMT(NDOFEL,1),FRST1(NDOFEL,NDOFEL),FRST2(NDOFEL,1),
+     2XX(2,NNODE),XW(9),XP(2,9),AUX1(NTENS,NDOFEL),STRESS(NTENS),
+     3STRAN(NTENS),DSTRAN(NTENS),EELAS(NTENS),EPLAS(NTENS),
+     4SR(NDOFEL)
+C
+C     Arrays to be used in UMAT.f
+C
+      DIMENSION STATEV(NSTATV),DDSDDT(NTENS),DRPLDE(NTENS),
+     1UPREDEF(1), DPRED(1),UCOORDS(3),DROT(3, 3), DFGRD0(3, 3),
+     2DFGRD1(3, 3),DDSDDE(NTENS, NTENS)
+C
+C     Initializes parameters required by UMAT.f
+C
+      CALL KCLEARV(SR,NDOFEL)
+      CALL KCLEARV(STRESS,NTENS)
+      CALL KCLEARV(STRAN,NTENS)
+      CALL KCLEARV(DSTRAN,NTENS)
+      CALL KCLEARV(DDSDDT,NTENS)
+      CALL KCLEARV(DRPLDE,NTENS)
+      CALL KCLEAR(DROT,3,3)
+      CALL KCLEAR(DFGRD0,3,3)
+      CALL KCLEAR(DFGRD1,3,3)
+      CALL KCLEAR(DDSDDE,NTENS,NTENS)
+      UPREDEF(1)=ZERO
+      DPRED(1)=ZERO
+C
+C     Clears RHS vector and Stiffness matrix
+C
+      CALL KCLEARV(RHS,NDOFEL)
+      CALL KCLEAR(AMATRX,NDOFEL,NDOFEL)
+      CALL KCLEAR(AUX1,NTENS,NDOFEL)
+C
+      CALL KGPOINTS2X2(XP,XW)
+      NGPT=4
+C
+C     Loops around all Gauss points
+C
+      DO NN=1,NGPT
+C
+        RII=XP(1,NN)
+        SII=XP(2,NN)
+        ALF=XW(NN)
+C
+C       Compute State variable index corresponding
+C       to current Gauss point and load stress,total strain
+C       elastic strain,plastic strain and equivalent plastic
+C       strain from state variables as defined in USER ELEMENT. 
+C       Different variables are required for different constitutive models.
+C
+        ISVINT=1+(NN-1)*NSVARS/NGPT
+        JJ=1
+        DO II=ISVINT,ISVINT+3
+          STRESS(JJ)=SVARS(II)
+          STRAN(JJ )=SVARS(II+4)
+          JJ=JJ+1
+        END DO
+C
+C       Starts STATEV array definition as required by UMAT.f
+C       Different variables for different constitutive models.
+C
+C
+C       Ends STATEV array definition as required by UMAT.f
+C
+C       Assembles strain-displacement and relative rotation-displacement
+C       matrices B and BLM=(L-M)
+C
+        CALL KSTDM(JELEM,NNODE,NDOFEL,NTENS,COORDS,B,DDET,RII,SII,XBAR)
+C
+C       Computes strain increment and updates strain.
+C
+        CALL KMAVEC(B,NTENS,NDOFEL,DU,DSTRAN)
+        CALL KUPDVEC(STRAN,NTENS,DSTRAN)
+C
+C       Assembles material matrix and updates state variables
+C
+        CALL UMAT(STRESS, STATEV, DDSDDE, SSE, SPD, SCD, RPL,
+     1  DDSDDT, DRPLDE, DRPLDT, STRAN, DSTRAN, TIME, DTIME, TEMP,
+     2  DTEMP, UPREDEF, DPRED, CMNAME, NDI, NSHR, NTENS, NSTATV,
+     3  PROPS, NPROPS, UCOORDS, DROT, PNEWDT, CELENT, DFGRD0,
+     4  DFGRD1, JELEM, NN, LAYER, KSPT, KSTEP, KINC)
+C
+C       Assembles STIFFNESS matrix
+c                                        T
+C       Generalized stress component.===B M B (stress and couple stress)
+C
+        CALL KMMULT(DDSDDE,NTENS,NTENS,B,NTENS,NDOFEL,AUX1)
+        CALL KMTRAN(B,NTENS,NDOFEL,BT)
+        CALL KMMULT(BT,NDOFEL,NTENS,AUX1,NTENS,NDOFEL,FRST1)
+C
+C       Assembles RHS vector contribution
+C
+        CALL KMAVEC(BT,NDOFEL,NTENS,STRESS,FRST2)
+C
+C       Considers Gauss weight and Jacobian determinant representing
+C       volume differential.
+C
+        CALL KSMULT(FRST1,NDOFEL,NDOFEL,ALF*DDET*XBAR)
+        CALL KSMULT(FRST2,NDOFEL,1,-ALF*DDET*XBAR)
+C
+C       Updates Stiffness matrix and RHS vector
+C       
+        CALL KUPDMAT(AMATRX,NDOFEL,NDOFEL,FRST1)
+        CALL KUPDVEC(RHS,NDOFEL,FRST2)
+C
+C       Clears material Jacobian and temporary stiffness matrix
+C       array for new Gauss point 
+C
+        CALL KCLEAR(DDSDDE,NTENS,NTENS)
+        CALL KCLEAR(FRST1,NDOFEL,NDOFEL)
+        CALL KCLEAR(FRST2,NDOFEL,1)
+C
+C       Starts updating of state variables with updated values from UMAT.f
+C
+        JJ=1
+        DO II=ISVINT,ISVINT+3
+          SVARS(II)=STRESS(JJ)
+          SVARS(II+4 )=STRAN(JJ)
+          JJ=JJ+1
+        END DO
+C
+C       Ends updating of state variables with updated values from UMAT.f
+C
+      END DO
+ccc
+C
+C     Assembles surface tractions contribution.
+C
+      DO II=1,NDLOAD
+        IDFACE=JDLTYP(II,1)
+        PMAG=ADLMAG(II,1)
+        CALL KSURTRAC(IDFACE,PMAG,NDOFEL,NNODE,COORDS,SR)
+        CALL KUPDVEC(RHS,NDOFEL,SR)
+      END DO
+
+ccc
+C
+C     EXTRAPOLATE STRAIN TO THE NODES
+C
+c      RII=-1.0
+c      SII=1.0
+c      CALL KSTDM(JELEM,JTYPE,NNODE,NDOFEL,NTENS,COORDS,B,BD,BV,HP,
+c     1           DDET,RII,SII,XBAR)
+c      CALL KMAVEC(B,NTENS,NDOFEL,U,STRAN)
+c      svars(109)=stress(2)
+c      SVARS(110)=STRAN(2)
+ccc
+      RETURN
+C      
+      END
+C
+CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+C11111111122222222223333333333444444444455555555556666666666777777777777
+C23456789012345678901234567890123456789012345678901234567890123456789012
+C                                                                      C
+C--C O N S T I T U T I V E  M A T E R I A L S  S U B R O U T I N E S---C
+C                                                                      C
+C23456789012345678901234567890123456789012345678901234567890123456789012
+CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+C23456789012345678901234567890123456789012345678901234567890123456789012
+C11111111122222222223333333333444444444455555555556666666666777777777777
+C23456789012345678901234567890123456789012345678901234567890123456789012
+C                                                                      C
+C     SUBROUTINE UMAT                                                  C
+C     ISOTROPIC ELASTICITY                                             C
+C     CANNOT BE USED FOR PLANE STRESS                                  C
+C     NTENS: LENGTH OF STRESS VECTOR                                   C
+C     NDI:   NUMBER OF NORMAL STRESS COMPONENTS                        C
+C     JANUARY 26/2004                                                  C
+C                                                                      C
+C     LOCAL ARRAYS                                                     C
+C                                                                      C
+C     PROPS(1) - E                                                     C
+C     PROPS(2) - NU                                                    C
+C                                                                      C
+C     DDSDDE() - MATERIAL JACOBIAN                                     C
+C     STRESS() - UPDATED STRESS VECTOR                                 C
+C                                                                      C
+C23456789012345678901234567890123456789012345678901234567890123456789012
+CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+C
+      SUBROUTINE UMAT(STRESS, STATEV, DDSDDE, SSE, SPD, SCD, RPL,
+     1DDSDDT, DRPLDE, DRPLDT, STRAN, DSTRAN, TIME, DTIME, TEMP,
+     2DTEMP, PREDEF, DPRED, CMNAME, NDI, NSHR, NTENS, NSTATV,
+     3PROPS, NPROPS, COORDS, DROT, PNEWDT, CELENT, DFGRD0,
+     4DFGRD1, NOEL, NPT, LAYER, KSPT, KSTEP, KINC)
+C
+      INCLUDE 'ABA_PARAM.INC'
+C
+      CHARACTER*80 CMNAME
+C 
+      DIMENSION STRESS(NTENS), STATEV(NSTATV),DDSDDE(NTENS, NTENS),
+     1DDSDDT(NTENS),DRPLDE(NTENS),STRAN(NTENS),DSTRAN(NTENS),TIME(2),
+     2PREDEF(1), DPRED(1), PROPS(NPROPS),COORDS(3),DROT(3, 3),
+     3 DFGRD0(3, 3), DFGRD1(3, 3)
+C
+      DIMENSION DS(NTENS)
+C
+      PARAMETER (ZERO=0.D0, ONE=1.D0, TWO=2.D0, THREE=3.D0, SIX=6.0D0,
+     1           ENUMAX=0.4999D0, NEWTON=10, TOLER=1.0D-7,MAXITER=30,
+     2           FOUR=4.D0)
+C
+C**********************************************************************
+C               C O S S E R A T  E L A S T I C I T Y
+C**********************************************************************
+C
+C     Elastic properties
+C
+      EMOD=PROPS(1)
+      ENU=MIN(PROPS(2),ENUMAX)
+      PLS=PROPS(3)
+      EBULK3=EMOD/(ONE-TWO*ENU)
+      EG2=EMOD/(ONE+ENU)
+      EG=EG2/TWO
+      EG3=THREE*EG
+      ELAM=(EBULK3-EG2)/THREE
+C
+C     Elastic stiffness
+C
+      DO K1=1, 3
+        DO K2=1, 3
+          DDSDDE(K2, K1)=ELAM
+        END DO
+        DDSDDE(K1, K1)=EG2+ELAM
+      END DO
+      DO K1=4, 4
+        DDSDDE(K1, K1)=EG
+      END DO
+C
+C     Calculate the stress increment and
+C     updates the stress vector.
+C
+      CALL KMAVEC(DDSDDE,NTENS,NTENS,DSTRAN,DS)
+      CALL KUPDVEC(STRESS,NTENS,DS)
+C
+      RETURN
+C
+      END
+C
+CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+C11111111122222222223333333333444444444455555555556666666666777777777777
+C23456789012345678901234567890123456789012345678901234567890123456789012
+C                                                                      C
+C         --G E N E R A L  F E M  S U B R O U T I N E S--              C
+C                                                                      C
+C23456789012345678901234567890123456789012345678901234567890123456789012
+CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+C
+CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+C                                                                      C
+C     SUBROUTINE KSTDM:GENERATES THE STRAIN-DISPLACEMENT MATRIX B      C
+C     AND JACOBIAN DETERMINANT DDET AT THE POINT r ,s                  C
+C                                                 i  j                 C
+C     FOR AN 4-NODED 2D ELEMENT-PLANE STRAIN                           C
+C     B    =STRAIN-DISPLACEMENT MATRIX                                 C
+C     BLM  =RELATIVE STRAIN DISPLACEMENT MATRIX                        C
+C     DDET =JACOBIAN DETERMINANT                                       C
+CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+C23456789012345678901234567890123456789012345678901234567890123456789012
+C
+      SUBROUTINE KSTDM(IDEL,NNE,NDOFEL,NTENS,XX,B,DDET,R,S,XBAR)
+C
+      IMPLICIT REAL*8 (A-H,O-Z)
+C
+      PARAMETER (ONE=1.D0,TWO=2.D0,THREE=3.D0,HALF=0.5D0)
+C
+      DIMENSION XX(2,NNE),B(NTENS,NDOFEL),P(2,NNE),AUX1(2,NNE),XJ(2,2),
+     2XJI(2,2)
+C
+C     Initialize arrays
+C
+      XBAR=ONE
+      CALL KCLEAR(B,NTENS,NDOFEL)
+      CALL KCLEAR(XJ,2,2)
+      CALL KCLEAR(XJI,2,2)
+      CALL KCLEAR(P,2,NNE)
+C
+C     Shape functions derivatives w.r.t natural coordinates
+C
+      CALL KSFDER(IELT,NDOFEL,NNE,R,S,P)
+C
+C     Computes the Jacobian operator and its determinant at point (r,s)
+C
+      CALL KJACOPER(NNE,XJ,XX,P)
+      DDET=XJ(1,1)*XJ(2,2)-XJ(1,2)*XJ(2,1)
+C
+C     Computes the inverse of the Jacobiam operator
+C
+      CALL KJACINVE(XJ,DDET,XJI)
+C
+C     Jacobian Inverse times Shape Functions derivatives w.r.t natural coordinates
+C     to produce shape function derivatives w.r.t x,y coordinates.
+C          
+      CALL KMMULT(XJI,2,2,P,2,NNE,AUX1)
+C
+C     Assembles B matrix for a
+C     Cosserat element.
+C
+      DO I=1,NNE
+        II=2*(I-1)+1
+        B(1,II)=AUX1(1,I)
+        B(2,II+1)=AUX1(2,I)
+        B(4,II)=AUX1(2,I)
+        B(4,II+1)=AUX1(1,I)
+      END DO
+C
+      RETURN
+C
+      END
+C
+CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+C                                                                      C
+C     SUBROUTINE KSFDER:GENERATES THE SHAPE FUNCTION DERIVATIVES       C
+C     ACCORDING TO ELEMENT TYPE AT THE POINT r ,s                      C
+C                                             i  j                     C
+C     B    =STRAIN-DISPLACEMENT MATRIX                                 C
+C     DDET =JACOBIAN DETERMINANT                                       C
+CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+C23456789012345678901234567890123456789012345678901234567890123456789012
+C
+      SUBROUTINE KSFDER(IELT,NDOFEL,NNE,R,S,P)
+C
+      IMPLICIT REAL*8(A-H,O-Z)
+C
+      PARAMETER(ONE=1.D0,TWO=2.D0, HALF=0.5D0,QUARTER=0.25D0,FOUR=4.D0)
+C
+      DIMENSION P(2,NNE)
+C
+C
+C     9-NODED ELEMENT
+C     Derivatives w.r.t the natural coordinates
+C     w.r.t.r
+C
+      P(1,1)=(1./4.)*(S-1)
+      P(1,2)=(1./4.)*(1-S)
+      P(1,3)=(1./4.)*(1+S)
+      P(1,4)=(1./4.)*(-S-1)
+C
+C     w.r.t.s
+C
+      P(2,1)=(1./4.)*(R-1)
+      P(2,2)=(1./4.)*(-R-1)
+      P(2,3)=(1./4.)*(1+R)
+      P(2,4)=(1./4.)*(1-R)
+C
+      RETURN
+C
+      END
+C
+CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+C23456789012345678901234567890123456789012345678901234567890123456789012
+C                                                                      C
+C 3X3 GAUSS POINTS GENERATION                                          C
+C                                                                      C
+C                                                                      C
+CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+C23456789012345678901234567890123456789012345678901234567890123456789012
+      SUBROUTINE KGPOINTS3X3(XP,XW)
+C
+      IMPLICIT REAL*8 (A-H,O-Z)
+C
+      PARAMETER (ZERO=0.D0,ONE=1.D0)
+C
+      DIMENSION XP(2,9),XW(9),RLGP(2,9)
+C
+      RLGP(1,1)=-ONE
+      RLGP(1,2)=ZERO
+      RLGP(1,3)= ONE
+      RLGP(1,4)=-ONE
+      RLGP(1,5)=ZERO
+      RLGP(1,6)= ONE
+      RLGP(1,7)=-ONE
+      RLGP(1,8)=ZERO
+      RLGP(1,9)= ONE
+C
+      RLGP(2,1)=-ONE
+      RLGP(2,2)=-ONE
+      RLGP(2,3)=-ONE
+      RLGP(2,4)=ZERO
+      RLGP(2,5)=ZERO
+      RLGP(2,6)=ZERO
+      RLGP(2,7)= ONE
+      RLGP(2,8)= ONE
+      RLGP(2,9)= ONE
+C
+      XW(1)=0.555555555555556D0**2
+      XW(2)=0.555555555555556D0*0.888888888888889D0
+      XW(3)=0.555555555555556D0**2
+C
+      XW(4)=0.555555555555556D0*0.888888888888889D0
+      XW(5)=0.888888888888889D0**2
+      XW(6)=0.555555555555556D0*0.888888888888889D0
+C
+      XW(7)=0.555555555555556D0**2
+      XW(8)=0.555555555555556D0*0.888888888888889D0
+      XW(9)=0.555555555555556D0**2
+C
+      G=DSQRT(0.60D0)
+      DO I=1,2
+        DO J=1,9 
+          XP(I,J)=G*RLGP(I,J)
+        END DO
+      END DO
+C     
+      RETURN
+C
+      END
+C
+CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+C23456789012345678901234567890123456789012345678901234567890123456789012
+CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+C                                                                      C
+C   SUBROUTINE KGPOINTS2X2                                             C
+C                                                                      C
+C   2X2 GAUSS POINTS GENERATION                                        C
+C                                                                      C
+C                                                                      C
+CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+C23456789012345678901234567890123456789012345678901234567890123456789012
+C
+      SUBROUTINE KGPOINTS2X2(XP,XW)
+C
+      IMPLICIT REAL*8 (A-H,O-Z)
+C
+      PARAMETER (ZERO=0.D0,ONE=1.D0)
+C
+      DIMENSION XP(2,4),XW(4)
+C
+      CALL KCLEARV(XW,4)
+      CALL KCLEAR(XP,2,4)
+C
+      DO K1=1,4
+        XW(K1)=ONE
+      END DO
+C
+      XP(1,1)=-0.577350269189626
+      XP(2,1)=-0.577350269189626
+      XP(1,2)= 0.577350269189626
+      XP(2,2)=-0.577350269189626
+      XP(1,3)=-0.577350269189626
+      XP(2,3)= 0.577350269189626
+      XP(1,4)= 0.577350269189626
+      XP(2,4)= 0.577350269189626
+C
+      RETURN
+C
+      END
+C
+CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+C23456789012345678901234567890123456789012345678901234567890123456789012
+CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+C                                                                      C
+C   SUBROUTINE KJACOPER                                                C
+C                                                                      C
+C                                                                      C
+CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+C23456789012345678901234567890123456789012345678901234567890123456789012
+C
+      SUBROUTINE KJACOPER(NNE,XJA,XCORD,RDER)
+C
+      IMPLICIT REAL*8 (A-H,O-Z)
+C
+      PARAMETER(ZERO=0.0D0)
+C
+      DIMENSION XJA(2,2),XCORD(2,NNE),RDER(2,NNE)
+C
+      CALL KCLEAR(XJA,2,2)
+C
+      DUM=ZERO
+      DO K=1,2
+        DO J=1,2
+          DO I=1,NNE
+            DUM=DUM+RDER(K,I)*XCORD(J,I)
+          END DO
+          XJA(K,J)=DUM
+          DUM=ZERO
+        END DO
+      END DO
+C
+      RETURN
+C
+      END
+C
+CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+C23456789012345678901234567890123456789012345678901234567890123456789012
+C                                                                      C
+C      2X2 Jacobian inverse                                            C
+C                                                                      C
+CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+C23456789012345678901234567890123456789012345678901234567890123456789012
+C
+      SUBROUTINE KJACINVE(XJA,DD,XJAI)
+C
+      IMPLICIT REAL*8 (A-H,O-Z)
+C
+      DIMENSION XJA(2,2),XJAI(2,2),XADJ(2,2)
+C
+      XADJ(1,1)=XJA(2,2)
+      XADJ(1,2)=XJA(1,2)
+      XADJ(2,1)=XJA(2,1)
+      XADJ(2,2)=XJA(1,1)
+      DO J=1,2
+        DO K=1,2
+          COFA=((-1)**(J+K))*XADJ(J,K)
+          XJAI(J,K)=COFA/DD
+        END DO
+      END DO
+C
+      RETURN
+C
+      END
+C

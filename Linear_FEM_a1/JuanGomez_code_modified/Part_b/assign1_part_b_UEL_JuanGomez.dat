@@ -1,0 +1,312 @@
+1
+
+   Abaqus 3DEXPERIENCE R2018x                                  Date 21-Feb-2022   Time 12:11:07
+   For use by INDIAN INSTITUTE OF TECHNOLOGY BOMBAY under license from Dassault Systemes or its subsidiary.
+
+
+
+                         The Abaqus Software is a product of:
+
+                           Dassault Systemes SIMULIA Corp.
+                           1301 Atwood Avenue, Suite 101W
+                              Johnston, RI 02919, USA
+ 
+
+
+                   The Abaqus Software is available only under license
+                   from Dassault Systemes or its subsidiary and may be
+                   used or reproduced only in accordance with the terms
+                   of such license.
+ 
+                          On machine LAPTOP-BRO9FT16 
+                          you are authorized to run
+                          Abaqus/Standard until 15-Aug-2022
+
+                          Your site id is: 200000000020602 
+
+
+ 
+                    For assistance or any other information you may
+                    obtain contact information for your local office
+                    from the world wide web at:
+
+                      http://www.3ds.com/products/simulia/locations/
+
+ 
+                * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+                *                                                         * 
+                *                   *****************                     * 
+                *                   *  N O T I C E  *                     * 
+                *                   *****************                     * 
+                *                                                         * 
+                *                                                         * 
+                *               Abaqus 3DEXPERIENCE R2018x                * 
+                *                                                         * 
+                *          BUILD ID: 2017_11_07-22.51.41 127140           * 
+                *                                                         * 
+                *                                                         * 
+                *  Please make sure you are using                         * 
+                *  release 3DEXPERIENCE R2018x manuals                    * 
+                *  plus the notes accompanying this release.              * 
+                *                                                         * 
+                *                                                         * 
+                *                                                         * 
+                *                                                         * 
+                *                                                         * 
+                *   This program may not be used for commercial purposes  * 
+                *           without payment of a commercial fee.          * 
+                *                                                         * 
+                * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+
+
+ 
+
+
+
+     PROCESSING PART, INSTANCE, AND ASSEMBLY INFORMATION
+   *******************************************************
+
+
+     END PROCESSING PART, INSTANCE, AND ASSEMBLY INFORMATION
+   ***********************************************************
+
+
+
+
+     OPTIONS BEING PROCESSED
+   ***************************
+
+
+  *user element,type=U2, nodes=4, coordinates=2, properties=2, VARIABLES=34
+  *heading
+  *node
+  *element, type=U2, elset=patch
+  *user element,type=U2, nodes=4, coordinates=2, properties=2, VARIABLES=34
+  *boundary
+  *boundary
+  *uel property, elset=patch
+  *step
+  *step
+  *step
+  *static
+  *node print
+  *EL PRINT, Elset=patch, POSITION=INTEGRATION POINTS
+  *endstep
+  *boundary
+  *step
+  *static
+  *cload
+  *endstep
+
+
+
+                            P R O B L E M   S I Z E
+
+
+          NUMBER OF ELEMENTS IS                                     4
+          NUMBER OF NODES IS                                        9
+          NUMBER OF NODES DEFINED BY THE USER                       9
+          TOTAL NUMBER OF VARIABLES IN THE MODEL                   18
+          (DEGREES OF FREEDOM PLUS MAX NO. OF ANY LAGRANGE MULTIPLIER
+           VARIABLES. INCLUDE *PRINT,SOLVE=YES TO GET THE ACTUAL NUMBER.)
+
+
+
+                              END OF USER INPUT PROCESSING
+
+
+
+     JOB TIME SUMMARY
+       USER TIME (SEC)      =   0.0000    
+       SYSTEM TIME (SEC)    =  0.10000    
+       TOTAL CPU TIME (SEC) =  0.10000    
+       WALLCLOCK TIME (SEC) =          0
+1
+
+   Abaqus 3DEXPERIENCE R2018x                                  Date 21-Feb-2022   Time 12:11:10
+   For use by INDIAN INSTITUTE OF TECHNOLOGY BOMBAY under license from Dassault Systemes or its subsidiary.
+
+                                                                                               STEP    1  INCREMENT    1
+                                                                                          TIME COMPLETED IN THIS STEP   0.00    
+
+
+                        S T E P       1     S T A T I C   A N A L Y S I S
+
+
+                                                                                          
+
+     AUTOMATIC TIME CONTROL WITH -
+          A SUGGESTED INITIAL TIME INCREMENT OF                 1.00    
+          AND A TOTAL TIME PERIOD OF                            1.00    
+          THE MINIMUM TIME INCREMENT ALLOWED IS                1.000E-05
+          THE MAXIMUM TIME INCREMENT ALLOWED IS                 1.00    
+
+     LINEAR EQUATION SOLVER TYPE         DIRECT SPARSE
+  
+                   M E M O R Y   E S T I M A T E
+  
+ PROCESS      FLOATING PT       MINIMUM MEMORY        MEMORY TO
+              OPERATIONS           REQUIRED          MINIMIZE I/O
+             PER ITERATION           (MB)               (MB)
+  
+     1          7.69E+02               17                 24
+  
+ NOTE:
+      (1) SINCE ABAQUS DOES NOT PRE-ALLOCATE MEMORY AND ONLY ALLOCATES MEMORY AS NEEDED DURING THE ANALYSIS,
+          THE MEMORY REQUIREMENT PRINTED HERE CAN ONLY BE VIEWED AS A GENERAL GUIDELINE BASED ON THE BEST
+          KNOWLEDGE AVAILABLE AT THE BEGINNING OF A STEP BEFORE THE SOLUTION PROCESS HAS BEGUN.
+      (2) THE ESTIMATE IS NORMALLY UPDATED AT THE BEGINNING OF EVERY STEP. IT IS THE MAXIMUM VALUE OF THE
+          ESTIMATE FROM THE CURRENT STEP TO THE LAST STEP OF THE ANALYSIS, WITH UNSYMMETRIC SOLUTION TAKEN
+          INTO ACCOUNT IF APPLICABLE. 
+      (3) SINCE THE ESTIMATE IS BASED ON THE ACTIVE DEGREES OF FREEDOM IN THE FIRST ITERATION OF THE 
+          CURRENT STEP, THE MEMORY ESTIMATE MIGHT BE SIGNIFICANTLY DIFFERENT THAN ACTUAL USAGE FOR 
+          PROBLEMS WITH SUBSTANTIAL CHANGES IN ACTIVE DEGREES OF FREEDOM BETWEEN STEPS (OR EVEN WITHIN
+          THE SAME STEP). EXAMPLES ARE: PROBLEMS WITH SIGNIFICANT CONTACT CHANGES, PROBLEMS WITH MODEL
+          CHANGE, PROBLEMS WITH BOTH STATIC STEP AND STEADY STATE DYNAMIC PROCEDURES WHERE ACOUSTIC 
+          ELEMENTS WILL ONLY BE ACTIVATED IN THE STEADY STATE DYNAMIC STEPS.
+      (4) FOR MULTI-PROCESS EXECUTION, THE ESTIMATED VALUE OF FLOATING POINT OPERATIONS FOR EACH PROCESS
+          IS BASED ON AN INITIAL SCHEDULING OF OPERATIONS AND MIGHT NOT REFLECT THE ACTUAL FLOATING 
+          POINT OPERATIONS COMPLETED ON EACH PROCESS. OPERATIONS ARE DYNAMICALLY BALANCED DURING EXECUTION, 
+          SO THE ACTUAL BALANCE OF OPERATIONS BETWEEN PROCESSES IS EXPECTED TO BE BETTER THAN THE ESTIMATE
+          PRINTED HERE.
+      (5) THE UPPER LIMIT OF MEMORY THAT CAN BE ALLOCATED BY ABAQUS WILL IN GENERAL DEPEND ON THE VALUE OF
+          THE "MEMORY" PARAMETER AND THE AMOUNT OF PHYSICAL MEMORY AVAILABLE ON THE MACHINE. PLEASE SEE
+          THE "ABAQUS ANALYSIS USER'S MANUAL" FOR MORE DETAILS. THE ACTUAL USAGE OF MEMORY AND OF DISK
+          SPACE FOR SCRATCH DATA WILL DEPEND ON THIS UPPER LIMIT AS WELL AS THE MEMORY REQUIRED TO MINIMIZE
+          I/O. IF THE MEMORY UPPER LIMIT IS GREATER THAN THE MEMORY REQUIRED TO MINIMIZE I/O, THEN THE ACTUAL
+          MEMORY USAGE WILL BE CLOSE TO THE ESTIMATED "MEMORY TO MINIMIZE I/O" VALUE, AND THE SCRATCH DISK
+          USAGE WILL BE CLOSE-TO-ZERO; OTHERWISE, THE ACTUAL MEMORY USED WILL BE CLOSE TO THE PREVIOUSLY
+          MENTIONED MEMORY LIMIT, AND THE SCRATCH DISK USAGE WILL BE ROUGHLY PROPORTIONAL TO THE DIFFERENCE
+          BETWEEN THE ESTIMATED "MEMORY TO MINIMIZE I/O" AND THE MEMORY UPPER LIMIT. HOWEVER ACCURATE
+          ESTIMATE OF THE SCRATCH DISK SPACE IS NOT POSSIBLE.
+      (6) USING "*RESTART, WRITE" CAN GENERATE A LARGE AMOUNT OF DATA WRITTEN IN THE WORK DIRECTORY.
+
+
+                                INCREMENT     1 SUMMARY
+
+
+ TIME INCREMENT COMPLETED   1.00    ,  FRACTION OF STEP COMPLETED   1.00    
+ STEP TIME COMPLETED        1.00    ,  TOTAL TIME COMPLETED         1.00    
+
+
+
+                                                  E L E M E N T   O U T P U T
+
+
+
+
+
+   THE FOLLOWING TABLE IS PRINTED AT THE INTEGRATION POINTS FOR ELEMENT TYPE U2 AND ELEMENT SET 
+   PATCH
+
+    ELEMENT  PT FOOT-       SDV1        SDV2        SDV3        SDV4        SDV5        SDV6        SDV7        SDV8        
+                NOTE 
+
+           1   1         6.9185E-02 -0.2324     -4.8957E-02  0.2766      1.5358E-03 -2.3844E-03   0.000      7.1908E-03
+           2   1        -0.2644      2.1534E-03 -7.8669E-02  0.2194     -2.4143E-03  1.0507E-03   0.000      5.7051E-03
+           3   1        -0.2823     -0.7343     -0.3050      0.1332      2.9437E-04 -5.5809E-03   0.000      3.4638E-03
+           4   1         9.3568E-02  0.2649      0.1075      0.1428     -1.8148E-04  2.0453E-03   0.000      3.7134E-03
+
+ MAXIMUM                9.3568E-02  0.2649      0.1075      0.2766      1.5358E-03  2.0453E-03   0.000      7.1908E-03            
+ ELEMENT                     4           4           4           1           1           4           1           1             
+
+ MINIMUM               -0.2823     -0.7343     -0.3050      0.1332     -2.4143E-03 -5.5809E-03   0.000      3.4638E-03            
+ ELEMENT                     3           3           3           3           2           3           1           3             
+
+
+
+   THE FOLLOWING TABLE IS PRINTED AT THE INTEGRATION POINTS FOR ELEMENT TYPE U2 AND ELEMENT SET 
+   PATCH
+
+    ELEMENT  PT FOOT-       SDV9        SDV10       SDV11       SDV12       SDV13       SDV14       SDV15       SDV16       
+                NOTE 
+
+           1   1         0.2050      1.0467E-02  6.4639E-02  0.2090      1.8246E-03 -7.0423E-04   0.000      5.4343E-03
+           2   1        -0.1246      0.1906      1.9780E-02  0.3056     -1.8774E-03  2.2202E-03   0.000      7.9449E-03
+           3   1        -7.0941E-03 -8.1810E-02 -2.6671E-02  0.1471      2.5450E-04 -7.1680E-04   0.000      3.8233E-03
+           4   1         0.3342      0.8341      0.3505      0.1357     -2.1226E-04  6.2873E-03   0.000      3.5291E-03
+
+ MAXIMUM                0.3342      0.8341      0.3505      0.3056      1.8246E-03  6.2873E-03   0.000      7.9449E-03            
+ ELEMENT                     4           4           4           2           1           4           1           2             
+
+ MINIMUM               -0.1246     -8.1810E-02 -2.6671E-02  0.1357     -1.8774E-03 -7.1680E-04   0.000      3.5291E-03            
+ ELEMENT                     2           3           3           4           2           3           1           4             
+
+
+
+   THE FOLLOWING TABLE IS PRINTED AT THE INTEGRATION POINTS FOR ELEMENT TYPE U2 AND ELEMENT SET 
+   PATCH
+
+    ELEMENT  PT FOOT-       SDV17       SDV18       SDV19       SDV20       SDV21       SDV22       SDV23       SDV24       
+                NOTE 
+
+           1   1          0.000     -7.2300E-02 -0.2867     -0.1077      0.3239      4.6007E-04 -2.3267E-03   0.000
+           2   1          0.000      1.1254E-03  0.1419      4.2919E-02  0.2783     -5.4332E-04  1.2873E-03   0.000
+           3   1          0.000     -0.2000     -0.7217     -0.2765      0.3320      9.9473E-04 -5.7874E-03   0.000
+           4   1          0.000     -2.1083E-02  0.1431      3.6593E-02  0.3450     -7.4978E-04  1.3841E-03   0.000
+
+ MAXIMUM                 0.000      1.1254E-03  0.1431      4.2919E-02  0.3450      9.9473E-04  1.3841E-03   0.000                
+ ELEMENT                     1           2           4           2           4           3           4           1             
+
+ MINIMUM                 0.000     -0.2000     -0.7217     -0.2765      0.2783     -7.4978E-04 -5.7874E-03   0.000                
+ ELEMENT                     1           3           3           3           2           4           3           1             
+
+
+
+   THE FOLLOWING TABLE IS PRINTED AT THE INTEGRATION POINTS FOR ELEMENT TYPE U2 AND ELEMENT SET 
+   PATCH
+
+    ELEMENT  PT FOOT-       SDV25       SDV26       SDV27       SDV28       SDV29       SDV30       SDV31       SDV32       
+                NOTE 
+
+           1   1         8.4213E-03  5.2558E-02 -2.0694E-02  9.5592E-03  0.2568      5.5898E-04 -3.9329E-04   0.000
+           2   1         7.2366E-03  7.1410E-02  0.2790      0.1051      0.3419     -4.3810E-04  2.2600E-03   0.000
+           3   1         8.6332E-03  4.2242E-02 -0.1248     -2.4771E-02  0.3200      8.7116E-04 -1.3005E-03   0.000
+           4   1         8.9699E-03  0.2282      0.7616      0.2970      0.3757     -8.9318E-04  6.0404E-03   0.000
+
+ MAXIMUM                8.9699E-03  0.2282      0.7616      0.2970      0.3757      8.7116E-04  6.0404E-03   0.000                
+ ELEMENT                     4           4           4           4           4           3           4           1             
+
+ MINIMUM                7.2366E-03  4.2242E-02 -0.1248     -2.4771E-02  0.2568     -8.9318E-04 -1.3005E-03   0.000                
+ ELEMENT                     2           3           3           3           1           4           3           1             
+  
+  
+  
+  
+                                       N O D E   O U T P U T
+  
+  
+  
+  
+   THE FOLLOWING TABLE IS PRINTED FOR ALL NODES
+  
+       NODE FOOT-  U1             U2           
+            NOTE
+  
+         1      0.0000000E+00 -1.0639125E-02 
+         2      0.0000000E+00 -2.2584799E-04 
+         3      0.0000000E+00  1.0751589E-02 
+         4      9.8485546E-04 -7.7653810E-03 
+         5      2.8204815E-03  1.3345463E-03 
+         6      1.3806263E-03  8.2235058E-03 
+
+ MAXIMUM         2.8205E-03  1.0752E-02
+ AT NODE                 5           3
+
+ MINIMUM          0.000     -1.0639E-02
+ AT NODE                 1           1
+
+
+          THE ANALYSIS HAS BEEN COMPLETED
+
+
+
+                              ANALYSIS COMPLETE
+
+
+
+     JOB TIME SUMMARY
+       USER TIME (SEC)      =   0.0000    
+       SYSTEM TIME (SEC)    =   0.0000    
+       TOTAL CPU TIME (SEC) =   0.0000    
+       WALLCLOCK TIME (SEC) =          0

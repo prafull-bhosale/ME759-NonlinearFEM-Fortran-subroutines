@@ -1,0 +1,1277 @@
+# -*- coding: mbcs -*-
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].ConstrainedSketch(name='__profile__', sheetSize=5.0)
+mdb.models['Model-1'].sketches['__profile__'].ArcByCenterEnds(center=(0.0, 0.0)
+    , direction=CLOCKWISE, point1=(0.0, 1.0), point2=(1.0, 0.0))
+mdb.models['Model-1'].sketches['__profile__'].ArcByCenterEnds(center=(0.0, 0.0)
+    , direction=CLOCKWISE, point1=(0.0, 2.0), point2=(2.0, 0.0))
+mdb.models['Model-1'].sketches['__profile__'].Line(point1=(0.0, 2.0), point2=(
+    0.0, 1.0))
+mdb.models['Model-1'].sketches['__profile__'].VerticalConstraint(addUndoState=
+    False, entity=
+    mdb.models['Model-1'].sketches['__profile__'].geometry.findAt((0.0, 1.5), 
+    ))
+mdb.models['Model-1'].sketches['__profile__'].PerpendicularConstraint(
+    addUndoState=False, entity1=
+    mdb.models['Model-1'].sketches['__profile__'].geometry.findAt((
+    1.41421356237309, 1.4142135623731), ), entity2=
+    mdb.models['Model-1'].sketches['__profile__'].geometry.findAt((0.0, 1.5), 
+    ))
+mdb.models['Model-1'].sketches['__profile__'].Line(point1=(1.0, 0.0), point2=(
+    2.0, 0.0))
+mdb.models['Model-1'].sketches['__profile__'].HorizontalConstraint(
+    addUndoState=False, entity=
+    mdb.models['Model-1'].sketches['__profile__'].geometry.findAt((1.5, 0.0), 
+    ))
+mdb.models['Model-1'].sketches['__profile__'].PerpendicularConstraint(
+    addUndoState=False, entity1=
+    mdb.models['Model-1'].sketches['__profile__'].geometry.findAt((
+    0.707106781186547, 0.707106781186548), ), entity2=
+    mdb.models['Model-1'].sketches['__profile__'].geometry.findAt((1.5, 0.0), 
+    ))
+mdb.models['Model-1'].sketches['__profile__'].RadialDimension(curve=
+    mdb.models['Model-1'].sketches['__profile__'].geometry.findAt((
+    0.707106781186547, 0.707106781186548), ), radius=1.0, textPoint=(
+    1.04715764522552, 1.07399451732635))
+mdb.models['Model-1'].sketches['__profile__'].RadialDimension(curve=
+    mdb.models['Model-1'].sketches['__profile__'].geometry.findAt((
+    1.41421356237309, 1.4142135623731), ), radius=2.0, textPoint=(
+    2.0837254524231, 1.57993972301483))
+mdb.models['Model-1'].sketches['__profile__'].delete(objectList=(
+    mdb.models['Model-1'].sketches['__profile__'].dimensions[0], ))
+mdb.models['Model-1'].sketches['__profile__'].delete(objectList=(
+    mdb.models['Model-1'].sketches['__profile__'].dimensions[1], ))
+mdb.models['Model-1'].sketches['__profile__'].HorizontalDimension(textPoint=(
+    0.297300696372986, -0.495170474052429), value=1.0, vertex1=
+    mdb.models['Model-1'].sketches['__profile__'].vertices.findAt((1.0, 0.0), )
+    , vertex2=mdb.models['Model-1'].sketches['__profile__'].vertices.findAt((
+    0.0, 0.0), ))
+mdb.models['Model-1'].sketches['__profile__'].HorizontalDimension(textPoint=(
+    0.525198340415955, -1.16976475715637), value=2.0, vertex1=
+    mdb.models['Model-1'].sketches['__profile__'].vertices.findAt((2.0, 0.0), )
+    , vertex2=mdb.models['Model-1'].sketches['__profile__'].vertices.findAt((
+    0.0, 0.0), ))
+mdb.models['Model-1'].sketches['__profile__'].RadialDimension(curve=
+    mdb.models['Model-1'].sketches['__profile__'].geometry.findAt((
+    0.707106781186547, 0.707106781186548), ), radius=1.0, textPoint=(
+    0.958939433097839, 1.02999866008759))
+mdb.models['Model-1'].sketches['__profile__'].RadialDimension(curve=
+    mdb.models['Model-1'].sketches['__profile__'].geometry.findAt((
+    1.41421356237309, 1.4142135623731), ), radius=2.0, textPoint=(
+    1.83377254009247, 1.79991614818573))
+mdb.models['Model-1'].sketches['__profile__'].undo()
+mdb.models['Model-1'].sketches['__profile__'].undo()
+mdb.models['Model-1'].sketches['__profile__'].VerticalDimension(textPoint=(
+    -0.393744111061096, 0.399400115013123), value=1.0, vertex1=
+    mdb.models['Model-1'].sketches['__profile__'].vertices.findAt((0.0, 1.0), )
+    , vertex2=mdb.models['Model-1'].sketches['__profile__'].vertices.findAt((
+    0.0, 0.0), ))
+mdb.models['Model-1'].sketches['__profile__'].undo()
+mdb.models['Model-1'].sketches['__profile__'].Spot(point=(0.0, 0.0))
+mdb.models['Model-1'].sketches['__profile__'].DistanceDimension(entity1=
+    mdb.models['Model-1'].sketches['__profile__'].vertices.findAt((0.0, 0.0), )
+    , entity2=mdb.models['Model-1'].sketches['__profile__'].geometry.findAt((
+    1.5, 0.0), ), textPoint=(-0.651048302650452, 0.531386017799377), value=0.0)
+mdb.models['Model-1'].sketches['__profile__'].undo()
+mdb.models['Model-1'].sketches['__profile__'].delete(objectList=(
+    mdb.models['Model-1'].sketches['__profile__'].vertices.findAt((0.0, 0.0), 
+    ), ))
+mdb.models['Model-1'].sketches['__profile__'].undo()
+mdb.models['Model-1'].sketches['__profile__'].ConcentricConstraint(entity1=
+    mdb.models['Model-1'].sketches['__profile__'].geometry.findAt((
+    0.707106781186547, 0.707106781186548), ), entity2=
+    mdb.models['Model-1'].sketches['__profile__'].vertices.findAt((0.0, 0.0), 
+    ))
+mdb.models['Model-1'].sketches['__profile__'].ConcentricConstraint(entity1=
+    mdb.models['Model-1'].sketches['__profile__'].geometry.findAt((
+    1.41421356237309, 1.4142135623731), ), entity2=
+    mdb.models['Model-1'].sketches['__profile__'].vertices.findAt((0.0, 0.0), 
+    ))
+mdb.models['Model-1'].sketches['__profile__'].FixedConstraint(entity=
+    mdb.models['Model-1'].sketches['__profile__'].vertices.findAt((0.0, 0.0), 
+    ))
+mdb.models['Model-1'].Part(dimensionality=TWO_D_PLANAR, name='Part-1', type=
+    DEFORMABLE_BODY)
+mdb.models['Model-1'].parts['Part-1'].BaseShell(sketch=
+    mdb.models['Model-1'].sketches['__profile__'])
+del mdb.models['Model-1'].sketches['__profile__']
+mdb.models['Model-1'].Material(name='Material-1')
+mdb.models['Model-1'].materials['Material-1'].Elastic(table=((100.0, 0.3), ))
+mdb.models['Model-1'].HomogeneousSolidSection(material='Material-1', name=
+    'Section-1', thickness=None)
+mdb.models['Model-1'].parts['Part-1'].Set(faces=
+    mdb.models['Model-1'].parts['Part-1'].faces.findAt(((0.094877, 1.659881, 
+    0.0), (0.0, 0.0, 1.0)), ), name='Set-1')
+mdb.models['Model-1'].parts['Part-1'].SectionAssignment(offset=0.0, 
+    offsetField='', offsetType=MIDDLE_SURFACE, region=
+    mdb.models['Model-1'].parts['Part-1'].sets['Set-1'], sectionName=
+    'Section-1', thicknessAssignment=FROM_SECTION)
+mdb.models['Model-1'].rootAssembly.DatumCsysByDefault(CARTESIAN)
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name='Part-1-1', 
+    part=mdb.models['Model-1'].parts['Part-1'])
+mdb.models['Model-1'].StaticStep(name='Step-1', previous='Initial')
+mdb.models['Model-1'].rootAssembly.Surface(name='InnerSurface', side1Edges=
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'].edges.findAt(((
+    0.382683, 0.92388, 0.0), ), ))
+mdb.models['Model-1'].Pressure(amplitude=UNSET, createStepName='Step-1', 
+    distributionType=UNIFORM, field='', magnitude=1.0, name='Pressure', region=
+    mdb.models['Model-1'].rootAssembly.surfaces['InnerSurface'])
+mdb.models['Model-1'].rootAssembly.Set(edges=
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'].edges.findAt(((
+    1.25, 0.0, 0.0), ), ), name='Set-1')
+mdb.models['Model-1'].DisplacementBC(amplitude=UNSET, createStepName='Step-1', 
+    distributionType=UNIFORM, fieldName='', fixed=OFF, localCsys=None, name=
+    'BC-1', region=mdb.models['Model-1'].rootAssembly.sets['Set-1'], u1=UNSET, 
+    u2=0.0, ur3=UNSET)
+mdb.models['Model-1'].rootAssembly.Set(edges=
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'].edges.findAt(((
+    0.0, 1.75, 0.0), ), ), name='Set-2')
+mdb.models['Model-1'].DisplacementBC(amplitude=UNSET, createStepName='Step-1', 
+    distributionType=UNIFORM, fieldName='', fixed=OFF, localCsys=None, name=
+    'BC-2', region=mdb.models['Model-1'].rootAssembly.sets['Set-2'], u1=0.0, 
+    u2=UNSET, ur3=UNSET)
+mdb.models['Model-1'].parts['Part-1'].seedEdgeByNumber(constraint=FINER, edges=
+    mdb.models['Model-1'].parts['Part-1'].edges.findAt(((0.765367, 1.847759, 
+    0.0), ), ), number=3)
+mdb.models['Model-1'].parts['Part-1'].Set(edges=
+    mdb.models['Model-1'].parts['Part-1'].edges.findAt(((0.765367, 1.847759, 
+    0.0), ), ), name='Edge Seeds-1')
+mdb.models['Model-1'].parts['Part-1'].seedEdgeByNumber(constraint=FINER, edges=
+    mdb.models['Model-1'].parts['Part-1'].edges.findAt(((0.0, 1.75, 0.0), ), ), 
+    number=4)
+mdb.models['Model-1'].parts['Part-1'].Set(edges=
+    mdb.models['Model-1'].parts['Part-1'].edges.findAt(((0.0, 1.75, 0.0), ), ), 
+    name='Edge Seeds-2')
+mdb.models['Model-1'].parts['Part-1'].generateMesh()
+mdb.models['Model-1'].parts['Part-1'].setElementType(elemTypes=(ElemType(
+    elemCode=CPE4, elemLibrary=STANDARD), ElemType(elemCode=CPE3, 
+    elemLibrary=STANDARD)), regions=(
+    mdb.models['Model-1'].parts['Part-1'].faces.findAt(((0.094877, 1.659881, 
+    0.0), (0.0, 0.0, 1.0)), ), ))
+mdb.models['Model-1'].parts['Part-1'].setElementType(elemTypes=(ElemType(
+    elemCode=CPE8, elemLibrary=STANDARD), ElemType(elemCode=CPE6M, 
+    elemLibrary=STANDARD)), regions=(
+    mdb.models['Model-1'].parts['Part-1'].faces.findAt(((0.094877, 1.659881, 
+    0.0), (0.0, 0.0, 1.0)), ), ))
+mdb.models['Model-1'].parts['Part-1'].deleteMesh(regions=
+    mdb.models['Model-1'].parts['Part-1'].faces.findAt(((0.094877, 1.659881, 
+    0.0), (0.0, 0.0, 1.0)), ))
+mdb.models['Model-1'].parts['Part-1'].deleteSeeds(regions=
+    mdb.models['Model-1'].parts['Part-1'].edges.findAt(((0.0, 1.75, 0.0), ), ))
+mdb.models['Model-1'].parts['Part-1'].deleteSeeds(regions=
+    mdb.models['Model-1'].parts['Part-1'].edges.findAt(((0.765367, 1.847759, 
+    0.0), ), ))
+mdb.models['Model-1'].parts['Part-1'].seedPart(deviationFactor=0.1, 
+    minSizeFactor=0.1, size=0.28)
+mdb.models['Model-1'].parts['Part-1'].generateMesh()
+mdb.models['Model-1'].parts['Part-1'].deleteMesh(regions=
+    mdb.models['Model-1'].parts['Part-1'].faces.findAt(((0.094877, 1.659881, 
+    0.0), (0.0, 0.0, 1.0)), ))
+mdb.models['Model-1'].parts['Part-1'].seedEdgeByNumber(constraint=FINER, edges=
+    mdb.models['Model-1'].parts['Part-1'].edges.findAt(((0.765367, 1.847759, 
+    0.0), ), ), number=3)
+mdb.models['Model-1'].parts['Part-1'].seedEdgeByNumber(constraint=FINER, edges=
+    mdb.models['Model-1'].parts['Part-1'].edges.findAt(((0.382683, 0.92388, 
+    0.0), ), ), number=3)
+mdb.models['Model-1'].parts['Part-1'].generateMesh()
+mdb.models['Model-1'].parts['Part-1'].setElementType(elemTypes=(ElemType(
+    elemCode=CPE8H, elemLibrary=STANDARD), ElemType(elemCode=CPE6M, 
+    elemLibrary=STANDARD, secondOrderAccuracy=OFF, distortionControl=DEFAULT)), 
+    regions=(mdb.models['Model-1'].parts['Part-1'].faces.findAt(((0.094877, 
+    1.659881, 0.0), (0.0, 0.0, 1.0)), ), ))
+mdb.models['Model-1'].parts['Part-1'].generateMesh()
+mdb.models['Model-1'].parts['Part-1'].setElementType(elemTypes=(ElemType(
+    elemCode=CPE8, elemLibrary=STANDARD), ElemType(elemCode=CPE6M, 
+    elemLibrary=STANDARD, secondOrderAccuracy=OFF, distortionControl=DEFAULT)), 
+    regions=(mdb.models['Model-1'].parts['Part-1'].faces.findAt(((0.094877, 
+    1.659881, 0.0), (0.0, 0.0, 1.0)), ), ))
+mdb.models['Model-1'].parts['Part-1'].deleteMesh(regions=
+    mdb.models['Model-1'].parts['Part-1'].faces.findAt(((0.094877, 1.659881, 
+    0.0), (0.0, 0.0, 1.0)), ))
+mdb.models['Model-1'].parts['Part-1'].setMeshControls(elemShape=QUAD, regions=
+    mdb.models['Model-1'].parts['Part-1'].faces.findAt(((0.094877, 1.659881, 
+    0.0), (0.0, 0.0, 1.0)), ), technique=SWEEP)
+mdb.models['Model-1'].parts['Part-1'].generateMesh()
+mdb.models['Model-1'].parts['Part-1'].deleteMesh(regions=
+    mdb.models['Model-1'].parts['Part-1'].faces.findAt(((0.094877, 1.659881, 
+    0.0), (0.0, 0.0, 1.0)), ))
+mdb.models['Model-1'].parts['Part-1'].setMeshControls(regions=
+    mdb.models['Model-1'].parts['Part-1'].faces.findAt(((0.094877, 1.659881, 
+    0.0), (0.0, 0.0, 1.0)), ), technique=STRUCTURED)
+mdb.models['Model-1'].parts['Part-1'].generateMesh()
+mdb.models['Model-1'].parts['Part-1'].deleteMesh(regions=
+    mdb.models['Model-1'].parts['Part-1'].faces.findAt(((0.094877, 1.659881, 
+    0.0), (0.0, 0.0, 1.0)), ))
+mdb.models['Model-1'].parts['Part-1'].setMeshControls(regions=
+    mdb.models['Model-1'].parts['Part-1'].faces.findAt(((0.094877, 1.659881, 
+    0.0), (0.0, 0.0, 1.0)), ), technique=SWEEP)
+mdb.models['Model-1'].parts['Part-1'].generateMesh()
+mdb.models['Model-1'].parts['Part-1'].setElementType(elemTypes=(ElemType(
+    elemCode=CPE4, elemLibrary=STANDARD), ElemType(elemCode=CPE3, 
+    elemLibrary=STANDARD)), regions=(
+    mdb.models['Model-1'].parts['Part-1'].faces.findAt(((0.094877, 1.659881, 
+    0.0), (0.0, 0.0, 1.0)), ), ))
+mdb.models['Model-1'].rootAssembly.regenerate()
+mdb.Job(atTime=None, contactPrint=OFF, description='', echoPrint=OFF, 
+    explicitPrecision=SINGLE, getMemoryFromAnalysis=True, historyPrint=OFF, 
+    memory=90, memoryUnits=PERCENTAGE, model='Model-1', modelPrint=OFF, 
+    multiprocessingMode=DEFAULT, name='ME759_Assign1_part_c', 
+    nodalOutputPrecision=SINGLE, numCpus=1, numGPUs=0, queue=None, 
+    resultsFormat=ODB, scratch='', type=ANALYSIS, userSubroutine='', waitHours=
+    0, waitMinutes=0)
+mdb.jobs.changeKey(fromName='ME759_Assign1_part_c', toName=
+    'ME759_Assign1_part_c_CPE4')
+mdb.jobs['ME759_Assign1_part_c_CPE4'].submit(consistencyChecking=OFF, 
+    datacheckJob=True)
+mdb.jobs['ME759_Assign1_part_c_CPE4']._Message(STARTED, {
+    'phase': BATCHPRE_PHASE, 'clientHost': 'LAPTOP-BRO9FT16', 'handle': 0, 
+    'jobName': 'ME759_Assign1_part_c_CPE4'})
+mdb.jobs['ME759_Assign1_part_c_CPE4']._Message(ODB_FILE, {
+    'phase': BATCHPRE_PHASE, 
+    'file': 'D:\\AbqWD\\ME759_Assign1_part_c_CPE4.odb', 
+    'jobName': 'ME759_Assign1_part_c_CPE4'})
+mdb.jobs['ME759_Assign1_part_c_CPE4']._Message(COMPLETED, {
+    'phase': BATCHPRE_PHASE, 'message': 'Analysis phase complete', 
+    'jobName': 'ME759_Assign1_part_c_CPE4'})
+mdb.jobs['ME759_Assign1_part_c_CPE4']._Message(STARTED, {
+    'phase': STANDARD_PHASE, 'clientHost': 'LAPTOP-BRO9FT16', 'handle': 9888, 
+    'jobName': 'ME759_Assign1_part_c_CPE4'})
+mdb.jobs['ME759_Assign1_part_c_CPE4']._Message(STEP, {'phase': STANDARD_PHASE, 
+    'stepId': 1, 'jobName': 'ME759_Assign1_part_c_CPE4'})
+mdb.jobs['ME759_Assign1_part_c_CPE4']._Message(ODB_FRAME, {
+    'phase': STANDARD_PHASE, 'step': 0, 'frame': 0, 
+    'jobName': 'ME759_Assign1_part_c_CPE4'})
+mdb.jobs['ME759_Assign1_part_c_CPE4']._Message(MEMORY_ESTIMATE, {
+    'phase': STANDARD_PHASE, 'jobName': 'ME759_Assign1_part_c_CPE4', 
+    'memory': 7.0})
+mdb.jobs['ME759_Assign1_part_c_CPE4']._Message(PHYSICAL_MEMORY, {
+    'phase': STANDARD_PHASE, 'physical_memory': 7988.0, 
+    'jobName': 'ME759_Assign1_part_c_CPE4'})
+mdb.jobs['ME759_Assign1_part_c_CPE4']._Message(MINIMUM_MEMORY, {
+    'minimum_memory': 7.0, 'phase': STANDARD_PHASE, 
+    'jobName': 'ME759_Assign1_part_c_CPE4'})
+mdb.jobs['ME759_Assign1_part_c_CPE4']._Message(COMPLETED, {
+    'phase': STANDARD_PHASE, 'message': 'Analysis phase complete', 
+    'jobName': 'ME759_Assign1_part_c_CPE4'})
+mdb.jobs['ME759_Assign1_part_c_CPE4']._Message(JOB_COMPLETED, {
+    'time': 'Sun Feb 20 23:25:17 2022', 
+    'jobName': 'ME759_Assign1_part_c_CPE4'})
+mdb.jobs['ME759_Assign1_part_c_CPE4'].submit(consistencyChecking=OFF)
+mdb.jobs['ME759_Assign1_part_c_CPE4']._Message(STARTED, {
+    'phase': BATCHPRE_PHASE, 'clientHost': 'LAPTOP-BRO9FT16', 'handle': 0, 
+    'jobName': 'ME759_Assign1_part_c_CPE4'})
+mdb.jobs['ME759_Assign1_part_c_CPE4']._Message(ODB_FILE, {
+    'phase': BATCHPRE_PHASE, 
+    'file': 'D:\\AbqWD\\ME759_Assign1_part_c_CPE4.odb', 
+    'jobName': 'ME759_Assign1_part_c_CPE4'})
+mdb.jobs['ME759_Assign1_part_c_CPE4']._Message(COMPLETED, {
+    'phase': BATCHPRE_PHASE, 'message': 'Analysis phase complete', 
+    'jobName': 'ME759_Assign1_part_c_CPE4'})
+mdb.jobs['ME759_Assign1_part_c_CPE4']._Message(STARTED, {
+    'phase': STANDARD_PHASE, 'clientHost': 'LAPTOP-BRO9FT16', 'handle': 14084, 
+    'jobName': 'ME759_Assign1_part_c_CPE4'})
+mdb.jobs['ME759_Assign1_part_c_CPE4']._Message(STEP, {'phase': STANDARD_PHASE, 
+    'stepId': 1, 'jobName': 'ME759_Assign1_part_c_CPE4'})
+mdb.jobs['ME759_Assign1_part_c_CPE4']._Message(ODB_FRAME, {
+    'phase': STANDARD_PHASE, 'step': 0, 'frame': 0, 
+    'jobName': 'ME759_Assign1_part_c_CPE4'})
+mdb.jobs['ME759_Assign1_part_c_CPE4']._Message(MEMORY_ESTIMATE, {
+    'phase': STANDARD_PHASE, 'jobName': 'ME759_Assign1_part_c_CPE4', 
+    'memory': 24.0})
+mdb.jobs['ME759_Assign1_part_c_CPE4']._Message(PHYSICAL_MEMORY, {
+    'phase': STANDARD_PHASE, 'physical_memory': 7988.0, 
+    'jobName': 'ME759_Assign1_part_c_CPE4'})
+mdb.jobs['ME759_Assign1_part_c_CPE4']._Message(MINIMUM_MEMORY, {
+    'minimum_memory': 17.0, 'phase': STANDARD_PHASE, 
+    'jobName': 'ME759_Assign1_part_c_CPE4'})
+mdb.jobs['ME759_Assign1_part_c_CPE4']._Message(ODB_FRAME, {
+    'phase': STANDARD_PHASE, 'step': 0, 'frame': 1, 
+    'jobName': 'ME759_Assign1_part_c_CPE4'})
+mdb.jobs['ME759_Assign1_part_c_CPE4']._Message(STATUS, {'totalTime': 1.0, 
+    'attempts': 1, 'timeIncrement': 1.0, 'increment': 1, 'stepTime': 1.0, 
+    'step': 1, 'jobName': 'ME759_Assign1_part_c_CPE4', 'severe': 0, 
+    'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['ME759_Assign1_part_c_CPE4']._Message(END_STEP, {
+    'phase': STANDARD_PHASE, 'stepId': 1, 
+    'jobName': 'ME759_Assign1_part_c_CPE4'})
+mdb.jobs['ME759_Assign1_part_c_CPE4']._Message(COMPLETED, {
+    'phase': STANDARD_PHASE, 'message': 'Analysis phase complete', 
+    'jobName': 'ME759_Assign1_part_c_CPE4'})
+mdb.jobs['ME759_Assign1_part_c_CPE4']._Message(JOB_COMPLETED, {
+    'time': 'Sun Feb 20 23:25:39 2022', 
+    'jobName': 'ME759_Assign1_part_c_CPE4'})
+# Save by lenovo on 2022_02_20-23.46.27; build 2018 2017_11_07-22.51.41 127140
+# Save by lenovo on 2022_02_21-10.39.34; build 2018 2017_11_07-22.51.41 127140
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.Model(modelType=STANDARD_EXPLICIT, name='ME759_Assign1_Part_d_CPE4')
+mdb.models['Model-1'].boundaryConditions['BC-1'].suppress()
+del mdb.models['Model-1'].boundaryConditions['BC-1']
+del mdb.models['Model-1'].boundaryConditions['BC-2']
+mdb.models['Model-1'].rootAssembly.ReferencePoint(point=(0.0, 0.0, 0.0))
+mdb.models['Model-1'].rootAssembly.Set(edges=
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'].edges.findAt(((
+    1.25, 0.0, 0.0), )), name='Symm_BC1')
+mdb.models['Model-1'].YsymmBC(createStepName='Initial', localCsys=None, name=
+    'Symm_BC1', region=mdb.models['Model-1'].rootAssembly.sets['Symm_BC1'])
+mdb.models['Model-1'].rootAssembly.Set(edges=
+    mdb.models['Model-1'].rootAssembly.instances['Part-1-1'].edges.findAt(((
+    0.0, 1.75, 0.0), )), name='Symm_BC2')
+mdb.models['Model-1'].XsymmBC(createStepName='Initial', localCsys=None, name=
+    'Symm_BC2', region=mdb.models['Model-1'].rootAssembly.sets['Symm_BC2'])
+mdb.jobs['ME759_Assign1_part_c_CPE4'].submit(consistencyChecking=OFF)
+mdb.jobs['ME759_Assign1_part_c_CPE4']._Message(STARTED, {
+    'phase': BATCHPRE_PHASE, 'clientHost': 'LAPTOP-BRO9FT16', 'handle': 0, 
+    'jobName': 'ME759_Assign1_part_c_CPE4'})
+mdb.jobs['ME759_Assign1_part_c_CPE4']._Message(ODB_FILE, {
+    'phase': BATCHPRE_PHASE, 
+    'file': 'D:\\AbqWD\\ME759_Assign1_part_c_CPE4.odb', 
+    'jobName': 'ME759_Assign1_part_c_CPE4'})
+mdb.jobs['ME759_Assign1_part_c_CPE4']._Message(COMPLETED, {
+    'phase': BATCHPRE_PHASE, 'message': 'Analysis phase complete', 
+    'jobName': 'ME759_Assign1_part_c_CPE4'})
+mdb.jobs['ME759_Assign1_part_c_CPE4']._Message(STARTED, {
+    'phase': STANDARD_PHASE, 'clientHost': 'LAPTOP-BRO9FT16', 'handle': 10324, 
+    'jobName': 'ME759_Assign1_part_c_CPE4'})
+mdb.jobs['ME759_Assign1_part_c_CPE4']._Message(STEP, {'phase': STANDARD_PHASE, 
+    'stepId': 1, 'jobName': 'ME759_Assign1_part_c_CPE4'})
+mdb.jobs['ME759_Assign1_part_c_CPE4']._Message(ODB_FRAME, {
+    'phase': STANDARD_PHASE, 'step': 0, 'frame': 0, 
+    'jobName': 'ME759_Assign1_part_c_CPE4'})
+mdb.jobs['ME759_Assign1_part_c_CPE4']._Message(MEMORY_ESTIMATE, {
+    'phase': STANDARD_PHASE, 'memory': 24.0, 
+    'jobName': 'ME759_Assign1_part_c_CPE4'})
+mdb.jobs['ME759_Assign1_part_c_CPE4']._Message(PHYSICAL_MEMORY, {
+    'phase': STANDARD_PHASE, 'physical_memory': 7988.0, 
+    'jobName': 'ME759_Assign1_part_c_CPE4'})
+mdb.jobs['ME759_Assign1_part_c_CPE4']._Message(MINIMUM_MEMORY, {
+    'minimum_memory': 17.0, 'phase': STANDARD_PHASE, 
+    'jobName': 'ME759_Assign1_part_c_CPE4'})
+mdb.jobs['ME759_Assign1_part_c_CPE4']._Message(ODB_FRAME, {
+    'phase': STANDARD_PHASE, 'step': 0, 'frame': 1, 
+    'jobName': 'ME759_Assign1_part_c_CPE4'})
+mdb.jobs['ME759_Assign1_part_c_CPE4']._Message(STATUS, {'totalTime': 1.0, 
+    'increment': 1, 'attempts': 1, 'iterations': 1, 'phase': STANDARD_PHASE, 
+    'timeIncrement': 1.0, 'stepTime': 1.0, 'step': 1, 
+    'jobName': 'ME759_Assign1_part_c_CPE4', 'severe': 0, 'equilibrium': 1})
+mdb.jobs['ME759_Assign1_part_c_CPE4']._Message(END_STEP, {
+    'phase': STANDARD_PHASE, 'stepId': 1, 
+    'jobName': 'ME759_Assign1_part_c_CPE4'})
+mdb.jobs['ME759_Assign1_part_c_CPE4']._Message(COMPLETED, {
+    'phase': STANDARD_PHASE, 'message': 'Analysis phase complete', 
+    'jobName': 'ME759_Assign1_part_c_CPE4'})
+mdb.jobs['ME759_Assign1_part_c_CPE4']._Message(JOB_COMPLETED, {
+    'jobName': 'ME759_Assign1_part_c_CPE4', 
+    'time': 'Mon Feb 21 10:46:54 2022'})
+mdb.models['Model-1'].parts['Part-1'].DatumAxisByPrincipalAxis(principalAxis=
+    XAXIS)
+del mdb.models['Model-1'].parts['Part-1'].features['Datum axis-1']
+mdb.models['Model-1'].rootAssembly.regenerate()
+mdb.models['Model-1'].parts['Part-1'].DatumCsysByThreePoints(coordSysType=
+    CYLINDRICAL, name='Datum csys-1', origin=(0.0, 0.0, 0.0), point1=
+    mdb.models['Model-1'].parts['Part-1'].vertices.findAt((2.0, 0.0, 0.0), ), 
+    point2=mdb.models['Model-1'].parts['Part-1'].vertices.findAt((0.0, 2.0, 
+    0.0), ))
+mdb.models['Model-1'].rootAssembly.regenerate()
+mdb.jobs['ME759_Assign1_part_c_CPE4'].submit(consistencyChecking=OFF)
+mdb.jobs['ME759_Assign1_part_c_CPE4']._Message(STARTED, {
+    'phase': BATCHPRE_PHASE, 'clientHost': 'LAPTOP-BRO9FT16', 'handle': 0, 
+    'jobName': 'ME759_Assign1_part_c_CPE4'})
+mdb.jobs['ME759_Assign1_part_c_CPE4']._Message(ODB_FILE, {
+    'phase': BATCHPRE_PHASE, 
+    'file': 'D:\\AbqWD\\ME759_Assign1_part_c_CPE4.odb', 
+    'jobName': 'ME759_Assign1_part_c_CPE4'})
+mdb.jobs['ME759_Assign1_part_c_CPE4']._Message(COMPLETED, {
+    'phase': BATCHPRE_PHASE, 'message': 'Analysis phase complete', 
+    'jobName': 'ME759_Assign1_part_c_CPE4'})
+mdb.jobs['ME759_Assign1_part_c_CPE4']._Message(STARTED, {
+    'phase': STANDARD_PHASE, 'clientHost': 'LAPTOP-BRO9FT16', 'handle': 944, 
+    'jobName': 'ME759_Assign1_part_c_CPE4'})
+mdb.jobs['ME759_Assign1_part_c_CPE4']._Message(STEP, {'phase': STANDARD_PHASE, 
+    'stepId': 1, 'jobName': 'ME759_Assign1_part_c_CPE4'})
+mdb.jobs['ME759_Assign1_part_c_CPE4']._Message(ODB_FRAME, {
+    'phase': STANDARD_PHASE, 'step': 0, 'frame': 0, 
+    'jobName': 'ME759_Assign1_part_c_CPE4'})
+mdb.jobs['ME759_Assign1_part_c_CPE4']._Message(MEMORY_ESTIMATE, {
+    'phase': STANDARD_PHASE, 'memory': 24.0, 
+    'jobName': 'ME759_Assign1_part_c_CPE4'})
+mdb.jobs['ME759_Assign1_part_c_CPE4']._Message(PHYSICAL_MEMORY, {
+    'phase': STANDARD_PHASE, 'physical_memory': 7988.0, 
+    'jobName': 'ME759_Assign1_part_c_CPE4'})
+mdb.jobs['ME759_Assign1_part_c_CPE4']._Message(MINIMUM_MEMORY, {
+    'minimum_memory': 17.0, 'phase': STANDARD_PHASE, 
+    'jobName': 'ME759_Assign1_part_c_CPE4'})
+mdb.jobs['ME759_Assign1_part_c_CPE4']._Message(ODB_FRAME, {
+    'phase': STANDARD_PHASE, 'step': 0, 'frame': 1, 
+    'jobName': 'ME759_Assign1_part_c_CPE4'})
+mdb.jobs['ME759_Assign1_part_c_CPE4']._Message(STATUS, {'totalTime': 1.0, 
+    'increment': 1, 'attempts': 1, 'iterations': 1, 'phase': STANDARD_PHASE, 
+    'timeIncrement': 1.0, 'stepTime': 1.0, 'step': 1, 
+    'jobName': 'ME759_Assign1_part_c_CPE4', 'severe': 0, 'equilibrium': 1})
+mdb.jobs['ME759_Assign1_part_c_CPE4']._Message(END_STEP, {
+    'phase': STANDARD_PHASE, 'stepId': 1, 
+    'jobName': 'ME759_Assign1_part_c_CPE4'})
+mdb.jobs['ME759_Assign1_part_c_CPE4']._Message(COMPLETED, {
+    'phase': STANDARD_PHASE, 'message': 'Analysis phase complete', 
+    'jobName': 'ME759_Assign1_part_c_CPE4'})
+mdb.jobs['ME759_Assign1_part_c_CPE4']._Message(JOB_COMPLETED, {
+    'jobName': 'ME759_Assign1_part_c_CPE4', 
+    'time': 'Mon Feb 21 10:49:56 2022'})
+mdb.jobs['ME759_Assign1_part_c_CPE4'].submit(consistencyChecking=OFF)
+mdb.jobs['ME759_Assign1_part_c_CPE4']._Message(STARTED, {
+    'phase': BATCHPRE_PHASE, 'clientHost': 'LAPTOP-BRO9FT16', 'handle': 0, 
+    'jobName': 'ME759_Assign1_part_c_CPE4'})
+mdb.jobs['ME759_Assign1_part_c_CPE4']._Message(ODB_FILE, {
+    'phase': BATCHPRE_PHASE, 
+    'file': 'D:\\AbqWD\\ME759_Assign1_part_c_CPE4.odb', 
+    'jobName': 'ME759_Assign1_part_c_CPE4'})
+mdb.jobs['ME759_Assign1_part_c_CPE4']._Message(COMPLETED, {
+    'phase': BATCHPRE_PHASE, 'message': 'Analysis phase complete', 
+    'jobName': 'ME759_Assign1_part_c_CPE4'})
+mdb.jobs['ME759_Assign1_part_c_CPE4']._Message(STARTED, {
+    'phase': STANDARD_PHASE, 'clientHost': 'LAPTOP-BRO9FT16', 'handle': 9664, 
+    'jobName': 'ME759_Assign1_part_c_CPE4'})
+mdb.jobs['ME759_Assign1_part_c_CPE4']._Message(STEP, {'phase': STANDARD_PHASE, 
+    'stepId': 1, 'jobName': 'ME759_Assign1_part_c_CPE4'})
+mdb.jobs['ME759_Assign1_part_c_CPE4']._Message(ODB_FRAME, {
+    'phase': STANDARD_PHASE, 'step': 0, 'frame': 0, 
+    'jobName': 'ME759_Assign1_part_c_CPE4'})
+mdb.jobs['ME759_Assign1_part_c_CPE4']._Message(MEMORY_ESTIMATE, {
+    'phase': STANDARD_PHASE, 'jobName': 'ME759_Assign1_part_c_CPE4', 
+    'memory': 24.0})
+mdb.jobs['ME759_Assign1_part_c_CPE4']._Message(PHYSICAL_MEMORY, {
+    'phase': STANDARD_PHASE, 'physical_memory': 7988.0, 
+    'jobName': 'ME759_Assign1_part_c_CPE4'})
+mdb.jobs['ME759_Assign1_part_c_CPE4']._Message(MINIMUM_MEMORY, {
+    'minimum_memory': 17.0, 'phase': STANDARD_PHASE, 
+    'jobName': 'ME759_Assign1_part_c_CPE4'})
+mdb.jobs['ME759_Assign1_part_c_CPE4']._Message(ODB_FRAME, {
+    'phase': STANDARD_PHASE, 'step': 0, 'frame': 1, 
+    'jobName': 'ME759_Assign1_part_c_CPE4'})
+mdb.jobs['ME759_Assign1_part_c_CPE4']._Message(STATUS, {'totalTime': 1.0, 
+    'attempts': 1, 'timeIncrement': 1.0, 'increment': 1, 'stepTime': 1.0, 
+    'step': 1, 'jobName': 'ME759_Assign1_part_c_CPE4', 'severe': 0, 
+    'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['ME759_Assign1_part_c_CPE4']._Message(END_STEP, {
+    'phase': STANDARD_PHASE, 'stepId': 1, 
+    'jobName': 'ME759_Assign1_part_c_CPE4'})
+mdb.jobs['ME759_Assign1_part_c_CPE4']._Message(COMPLETED, {
+    'phase': STANDARD_PHASE, 'message': 'Analysis phase complete', 
+    'jobName': 'ME759_Assign1_part_c_CPE4'})
+mdb.jobs['ME759_Assign1_part_c_CPE4']._Message(JOB_COMPLETED, {
+    'time': 'Mon Feb 21 10:58:44 2022', 
+    'jobName': 'ME759_Assign1_part_c_CPE4'})
+# Save by lenovo on 2022_02_21-11.03.00; build 2018 2017_11_07-22.51.41 127140
+# Save by lenovo on 2022_02_21-11.03.01; build 2018 2017_11_07-22.51.41 127140
+# Save by lenovo on 2022_02_21-11.03.02; build 2018 2017_11_07-22.51.41 127140
+# Save by lenovo on 2022_02_21-11.03.02; build 2018 2017_11_07-22.51.41 127140
+# Save by lenovo on 2022_02_21-11.03.02; build 2018 2017_11_07-22.51.41 127140
+# Save by lenovo on 2022_02_21-11.03.03; build 2018 2017_11_07-22.51.41 127140
+# Save by lenovo on 2022_02_21-11.03.03; build 2018 2017_11_07-22.51.41 127140
+# Save by lenovo on 2022_02_21-11.03.22; build 2018 2017_11_07-22.51.41 127140
+# Save by lenovo on 2022_02_21-11.03.36; build 2018 2017_11_07-22.51.41 127140
+# Save by lenovo on 2022_02_21-11.03.37; build 2018 2017_11_07-22.51.41 127140
+# Save by lenovo on 2022_02_21-11.03.37; build 2018 2017_11_07-22.51.41 127140
+# Save by lenovo on 2022_02_21-11.03.37; build 2018 2017_11_07-22.51.41 127140
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['ME759_Assign1_Part_d_CPE4'].ConstrainedSketch(name='__profile__', 
+    sheetSize=200.0)
+mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].ArcByCenterEnds(
+    center=(0.0, 0.0), direction=CLOCKWISE, point1=(0.0, 0.5), point2=(0.5, 
+    0.0))
+mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].Line(point1=(
+    0.0, 0.5), point2=(0.0, 2.5))
+mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].VerticalConstraint(
+    addUndoState=False, entity=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].geometry.findAt(
+    (0.0, 1.5), ))
+mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].PerpendicularConstraint(
+    addUndoState=False, entity1=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].geometry.findAt(
+    (0.353553390593274, 0.353553390593274), ), entity2=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].geometry.findAt(
+    (0.0, 1.5), ))
+mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].Line(point1=(
+    0.0, 2.5), point2=(5.0, 0.0))
+mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].delete(
+    objectList=(
+    mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].geometry.findAt(
+    (2.5, 1.25), ), ))
+mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].Line(point1=(
+    0.0, 2.5), point2=(5.0, 5.0))
+mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].undo()
+mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].Line(point1=(
+    0.0, 2.5), point2=(5.0, 2.5))
+mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].HorizontalConstraint(
+    addUndoState=False, entity=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].geometry.findAt(
+    (2.5, 2.5), ))
+mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].PerpendicularConstraint(
+    addUndoState=False, entity1=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].geometry.findAt(
+    (0.0, 1.5), ), entity2=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].geometry.findAt(
+    (2.5, 2.5), ))
+mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].Line(point1=(
+    5.0, 2.5), point2=(5.0, 0.0))
+mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].VerticalConstraint(
+    addUndoState=False, entity=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].geometry.findAt(
+    (5.0, 1.25), ))
+mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].PerpendicularConstraint(
+    addUndoState=False, entity1=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].geometry.findAt(
+    (2.5, 2.5), ), entity2=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].geometry.findAt(
+    (5.0, 1.25), ))
+mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].Line(point1=(
+    5.0, 0.0), point2=(0.5, 0.0))
+mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].HorizontalConstraint(
+    addUndoState=False, entity=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].geometry.findAt(
+    (2.75, 0.0), ))
+mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].PerpendicularConstraint(
+    addUndoState=False, entity1=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].geometry.findAt(
+    (5.0, 1.25), ), entity2=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].geometry.findAt(
+    (2.75, 0.0), ))
+del mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__']
+mdb.models['ME759_Assign1_Part_d_CPE4'].ConstrainedSketch(name='__profile__', 
+    sheetSize=10.0)
+mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].ArcByCenterEnds(
+    center=(0.0, 0.0), direction=CLOCKWISE, point1=(0.5, 0.0), point2=(0.0, 
+    0.5))
+mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].undo()
+mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].ArcByCenterEnds(
+    center=(0.0, 0.0), direction=CLOCKWISE, point1=(0.0, 0.5), point2=(0.5, 
+    0.0))
+mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].Line(point1=(
+    0.0, 0.5), point2=(0.0, 2.5))
+mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].VerticalConstraint(
+    addUndoState=False, entity=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].geometry.findAt(
+    (0.0, 1.5), ))
+mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].PerpendicularConstraint(
+    addUndoState=False, entity1=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].geometry.findAt(
+    (0.353553390593274, 0.353553390593274), ), entity2=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].geometry.findAt(
+    (0.0, 1.5), ))
+mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].Line(point1=(
+    0.0, 2.5), point2=(5.0, 2.5))
+mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].HorizontalConstraint(
+    addUndoState=False, entity=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].geometry.findAt(
+    (2.5, 2.5), ))
+mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].PerpendicularConstraint(
+    addUndoState=False, entity1=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].geometry.findAt(
+    (0.0, 1.5), ), entity2=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].geometry.findAt(
+    (2.5, 2.5), ))
+mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].Line(point1=(
+    5.0, 2.5), point2=(3.1, 0.2))
+mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].Line(point1=(
+    3.1, 0.2), point2=(5.0, 0.0))
+mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].delete(
+    objectList=(
+    mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].geometry.findAt(
+    (4.05, 1.35), ), ))
+mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].delete(
+    objectList=(
+    mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].geometry.findAt(
+    (4.05, 0.1), ), ))
+mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].Line(point1=(
+    5.0, 2.5), point2=(5.0, 0.0))
+mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].VerticalConstraint(
+    addUndoState=False, entity=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].geometry.findAt(
+    (5.0, 1.25), ))
+mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].PerpendicularConstraint(
+    addUndoState=False, entity1=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].geometry.findAt(
+    (2.5, 2.5), ), entity2=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].geometry.findAt(
+    (5.0, 1.25), ))
+mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].Line(point1=(
+    5.0, 0.0), point2=(0.5, 0.0))
+mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].HorizontalConstraint(
+    addUndoState=False, entity=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].geometry.findAt(
+    (2.75, 0.0), ))
+mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].PerpendicularConstraint(
+    addUndoState=False, entity1=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].geometry.findAt(
+    (5.0, 1.25), ), entity2=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].geometry.findAt(
+    (2.75, 0.0), ))
+mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].Spot(point=(
+    0.0, 0.0))
+mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].FixedConstraint(
+    entity=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].vertices.findAt(
+    (0.0, 0.0), ))
+mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].ConcentricConstraint(
+    entity1=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].geometry.findAt(
+    (0.353553390593274, 0.353553390593274), ), entity2=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].vertices.findAt(
+    (0.0, 0.0), ))
+mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].HorizontalDimension(
+    textPoint=(1.15938448905945, -0.574022591114044), value=5.0, vertex1=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].vertices.findAt(
+    (5.0, 0.0), ), vertex2=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].vertices.findAt(
+    (0.0, 0.0), ))
+mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].VerticalDimension(
+    textPoint=(-0.949360847473145, 0.71870094537735), value=2.5, vertex1=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].vertices.findAt(
+    (0.0, 2.5), ), vertex2=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].vertices.findAt(
+    (0.0, 0.0), ))
+mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].RadialDimension(
+    curve=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].geometry.findAt(
+    (0.353553390593274, 0.353553390593274), ), radius=0.5, textPoint=(
+    1.08932614326477, 0.78857809305191))
+mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].ObliqueDimension(
+    textPoint=(1.84595274925232, -0.266563951969147), value=4.5, vertex1=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].vertices.findAt(
+    (5.0, 0.0), ), vertex2=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].vertices.findAt(
+    (0.5, 0.0), ))
+mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].ObliqueDimension(
+    textPoint=(-0.59907078742981, 1.44542145729065), value=2.0, vertex1=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].vertices.findAt(
+    (0.0, 0.5), ), vertex2=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].vertices.findAt(
+    (0.0, 2.5), ))
+mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].delete(
+    objectList=(
+    mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].dimensions[4], 
+    ))
+mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].ObliqueDimension(
+    textPoint=(-0.434049844741821, 1.2173798084259), value=2.0, vertex1=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].vertices.findAt(
+    (0.0, 0.5), ), vertex2=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].vertices.findAt(
+    (0.0, 2.5), ))
+mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].undo()
+mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].DistanceDimension(
+    entity1=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].geometry.findAt(
+    (0.0, 1.5), ), entity2=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].vertices.findAt(
+    (0.0, 0.0), ), textPoint=(-0.459757804870605, 1.21225142478943), value=0.0)
+mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].undo()
+mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].VerticalDimension(
+    textPoint=(-0.552306175231934, 0.422493517398834), value=0.5, vertex1=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].vertices.findAt(
+    (0.0, 0.5), ), vertex2=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].vertices.findAt(
+    (0.0, 0.0), ))
+mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].undo()
+mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].delete(
+    objectList=(
+    mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].dimensions[3], 
+    ))
+mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].ObliqueDimension(
+    textPoint=(5.35023069381714, 0.699421525001526), value=2.5, vertex1=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].vertices.findAt(
+    (5.0, 2.5), ), vertex2=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].vertices.findAt(
+    (5.0, 0.0), ))
+mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].undo()
+mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].ObliqueDimension(
+    textPoint=(5.70672559738159, 0.897915005683899), value=2.5, vertex1=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].vertices.findAt(
+    (5.0, 2.5), ), vertex2=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'].vertices.findAt(
+    (5.0, 0.0), ))
+mdb.models['ME759_Assign1_Part_d_CPE4'].Part(dimensionality=TWO_D_PLANAR, name=
+    'Part-1', type=DEFORMABLE_BODY)
+mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].BaseShell(sketch=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__'])
+del mdb.models['ME759_Assign1_Part_d_CPE4'].sketches['__profile__']
+mdb.models['ME759_Assign1_Part_d_CPE4'].Material(name='Material-1')
+mdb.models['ME759_Assign1_Part_d_CPE4'].materials['Material-1'].Elastic(table=(
+    (100.0, 0.3), ))
+mdb.models['ME759_Assign1_Part_d_CPE4'].HomogeneousSolidSection(material=
+    'Material-1', name='Section-1', thickness=None)
+mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].Set(faces=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].faces.findAt(((
+    0.063781, 1.15398, 0.0), (0.0, 0.0, 1.0)), ), name='Set-1')
+mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].SectionAssignment(
+    offset=0.0, offsetField='', offsetType=MIDDLE_SURFACE, region=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].sets['Set-1'], 
+    sectionName='Section-1', thicknessAssignment=FROM_SECTION)
+mdb.models['ME759_Assign1_Part_d_CPE4'].rootAssembly.DatumCsysByDefault(
+    CARTESIAN)
+mdb.models['ME759_Assign1_Part_d_CPE4'].rootAssembly.Instance(dependent=ON, 
+    name='Part-1-1', part=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'])
+mdb.models['ME759_Assign1_Part_d_CPE4'].StaticStep(name='Step-1', previous=
+    'Initial')
+mdb.models['ME759_Assign1_Part_d_CPE4'].rootAssembly.Surface(name='Surf-1', 
+    side1Edges=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].rootAssembly.instances['Part-1-1'].edges.findAt(
+    ((5.0, 1.875, 0.0), ), ))
+mdb.models['ME759_Assign1_Part_d_CPE4'].Pressure(amplitude=UNSET, 
+    createStepName='Step-1', distributionType=UNIFORM, field='', magnitude=-1.0
+    , name='Load-1', region=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].rootAssembly.surfaces['Surf-1'])
+mdb.models['ME759_Assign1_Part_d_CPE4'].rootAssembly.Set(edges=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].rootAssembly.instances['Part-1-1'].edges.findAt(
+    ((3.875, 0.0, 0.0), ), ), name='BC1_Nodes')
+mdb.models['ME759_Assign1_Part_d_CPE4'].DisplacementBC(amplitude=UNSET, 
+    createStepName='Step-1', distributionType=UNIFORM, fieldName='', fixed=OFF, 
+    localCsys=None, name='BC-1', region=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].rootAssembly.sets['BC1_Nodes'], u1=
+    UNSET, u2=0.0, ur3=UNSET)
+mdb.models['ME759_Assign1_Part_d_CPE4'].rootAssembly.Set(edges=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].rootAssembly.instances['Part-1-1'].edges.findAt(
+    ((0.0, 1.0, 0.0), ), ), name='BC2_Nodes')
+mdb.models['ME759_Assign1_Part_d_CPE4'].DisplacementBC(amplitude=UNSET, 
+    createStepName='Step-1', distributionType=UNIFORM, fieldName='', fixed=OFF, 
+    localCsys=None, name='BC-2', region=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].rootAssembly.sets['BC2_Nodes'], u1=
+    0.0, u2=UNSET, ur3=UNSET)
+# Save by lenovo on 2022_02_21-11.12.50; build 2018 2017_11_07-22.51.41 127140
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].setMeshControls(
+    elemShape=QUAD, regions=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].faces.findAt(((
+    0.063781, 1.15398, 0.0), (0.0, 0.0, 1.0)), ), technique=STRUCTURED)
+mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].seedPart(
+    deviationFactor=0.1, minSizeFactor=0.1, size=0.5)
+mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].generateMesh()
+mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].deleteMesh()
+mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].seedPart(
+    deviationFactor=0.1, minSizeFactor=0.1, size=0.25)
+mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].generateMesh()
+mdb.models['ME759_Assign1_Part_d_CPE4'].rootAssembly.regenerate()
+mdb.Job(atTime=None, contactPrint=OFF, description='', echoPrint=OFF, 
+    explicitPrecision=SINGLE, getMemoryFromAnalysis=True, historyPrint=OFF, 
+    memory=90, memoryUnits=PERCENTAGE, model='ME759_Assign1_Part_d_CPE4', 
+    modelPrint=OFF, multiprocessingMode=DEFAULT, name=
+    'ME759_Assign1_part_d_CourseMesh', nodalOutputPrecision=SINGLE, numCpus=1, 
+    numGPUs=0, queue=None, resultsFormat=ODB, scratch='', type=ANALYSIS, 
+    userSubroutine='', waitHours=0, waitMinutes=0)
+mdb.jobs['ME759_Assign1_part_d_CourseMesh'].submit(consistencyChecking=OFF, 
+    datacheckJob=True)
+mdb.jobs['ME759_Assign1_part_d_CourseMesh']._Message(STARTED, {
+    'phase': BATCHPRE_PHASE, 'clientHost': 'LAPTOP-BRO9FT16', 'handle': 0, 
+    'jobName': 'ME759_Assign1_part_d_CourseMesh'})
+mdb.jobs['ME759_Assign1_part_d_CourseMesh']._Message(ODB_FILE, {
+    'phase': BATCHPRE_PHASE, 
+    'file': 'D:\\AbqWD\\ME759_Assign1_part_d_CourseMesh.odb', 
+    'jobName': 'ME759_Assign1_part_d_CourseMesh'})
+mdb.jobs['ME759_Assign1_part_d_CourseMesh']._Message(COMPLETED, {
+    'phase': BATCHPRE_PHASE, 'message': 'Analysis phase complete', 
+    'jobName': 'ME759_Assign1_part_d_CourseMesh'})
+mdb.jobs['ME759_Assign1_part_d_CourseMesh']._Message(STARTED, {
+    'phase': STANDARD_PHASE, 'clientHost': 'LAPTOP-BRO9FT16', 'handle': 9092, 
+    'jobName': 'ME759_Assign1_part_d_CourseMesh'})
+mdb.jobs['ME759_Assign1_part_d_CourseMesh']._Message(STEP, {
+    'phase': STANDARD_PHASE, 'stepId': 1, 
+    'jobName': 'ME759_Assign1_part_d_CourseMesh'})
+mdb.jobs['ME759_Assign1_part_d_CourseMesh']._Message(ODB_FRAME, {
+    'phase': STANDARD_PHASE, 'step': 0, 'frame': 0, 
+    'jobName': 'ME759_Assign1_part_d_CourseMesh'})
+mdb.jobs['ME759_Assign1_part_d_CourseMesh']._Message(MEMORY_ESTIMATE, {
+    'phase': STANDARD_PHASE, 'jobName': 'ME759_Assign1_part_d_CourseMesh', 
+    'memory': 7.0})
+mdb.jobs['ME759_Assign1_part_d_CourseMesh']._Message(PHYSICAL_MEMORY, {
+    'phase': STANDARD_PHASE, 'physical_memory': 7988.0, 
+    'jobName': 'ME759_Assign1_part_d_CourseMesh'})
+mdb.jobs['ME759_Assign1_part_d_CourseMesh']._Message(MINIMUM_MEMORY, {
+    'minimum_memory': 7.0, 'phase': STANDARD_PHASE, 
+    'jobName': 'ME759_Assign1_part_d_CourseMesh'})
+mdb.jobs['ME759_Assign1_part_d_CourseMesh']._Message(COMPLETED, {
+    'phase': STANDARD_PHASE, 'message': 'Analysis phase complete', 
+    'jobName': 'ME759_Assign1_part_d_CourseMesh'})
+mdb.jobs['ME759_Assign1_part_d_CourseMesh']._Message(JOB_COMPLETED, {
+    'time': 'Mon Feb 21 11:14:22 2022', 
+    'jobName': 'ME759_Assign1_part_d_CourseMesh'})
+mdb.jobs['ME759_Assign1_part_d_CourseMesh'].submit(consistencyChecking=OFF, 
+    continueJob=True)
+mdb.jobs['ME759_Assign1_part_d_CourseMesh']._Message(STARTED, {
+    'phase': STANDARD_PHASE, 'clientHost': 'LAPTOP-BRO9FT16', 'handle': 1472, 
+    'jobName': 'ME759_Assign1_part_d_CourseMesh'})
+mdb.jobs['ME759_Assign1_part_d_CourseMesh']._Message(STEP, {
+    'phase': STANDARD_PHASE, 'stepId': 1, 
+    'jobName': 'ME759_Assign1_part_d_CourseMesh'})
+mdb.jobs['ME759_Assign1_part_d_CourseMesh']._Message(MEMORY_ESTIMATE, {
+    'phase': STANDARD_PHASE, 'jobName': 'ME759_Assign1_part_d_CourseMesh', 
+    'memory': 24.0})
+mdb.jobs['ME759_Assign1_part_d_CourseMesh']._Message(PHYSICAL_MEMORY, {
+    'phase': STANDARD_PHASE, 'physical_memory': 7988.0, 
+    'jobName': 'ME759_Assign1_part_d_CourseMesh'})
+mdb.jobs['ME759_Assign1_part_d_CourseMesh']._Message(MINIMUM_MEMORY, {
+    'minimum_memory': 17.0, 'phase': STANDARD_PHASE, 
+    'jobName': 'ME759_Assign1_part_d_CourseMesh'})
+mdb.jobs['ME759_Assign1_part_d_CourseMesh']._Message(ODB_FRAME, {
+    'phase': STANDARD_PHASE, 'step': 0, 'frame': 1, 
+    'jobName': 'ME759_Assign1_part_d_CourseMesh'})
+mdb.jobs['ME759_Assign1_part_d_CourseMesh']._Message(STATUS, {'totalTime': 1.0, 
+    'attempts': 1, 'timeIncrement': 1.0, 'increment': 1, 'stepTime': 1.0, 
+    'step': 1, 'jobName': 'ME759_Assign1_part_d_CourseMesh', 'severe': 0, 
+    'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['ME759_Assign1_part_d_CourseMesh']._Message(END_STEP, {
+    'phase': STANDARD_PHASE, 'stepId': 1, 
+    'jobName': 'ME759_Assign1_part_d_CourseMesh'})
+mdb.jobs['ME759_Assign1_part_d_CourseMesh']._Message(COMPLETED, {
+    'phase': STANDARD_PHASE, 'message': 'Analysis phase complete', 
+    'jobName': 'ME759_Assign1_part_d_CourseMesh'})
+mdb.jobs['ME759_Assign1_part_d_CourseMesh']._Message(JOB_COMPLETED, {
+    'time': 'Mon Feb 21 11:15:06 2022', 
+    'jobName': 'ME759_Assign1_part_d_CourseMesh'})
+mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].Set(edges=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].edges.findAt(((
+    3.875, 0.0, 0.0), ), ), name='Plate_NodesAlongXAxis')
+mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].Set(edges=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].edges.findAt(((0.0, 
+    1.0, 0.0), ), ), name='Plate_NodesAlongYAxis')
+mdb.models['ME759_Assign1_Part_d_CPE4'].rootAssembly.regenerate()
+mdb.jobs['ME759_Assign1_part_d_CourseMesh'].submit(consistencyChecking=OFF)
+mdb.jobs['ME759_Assign1_part_d_CourseMesh']._Message(STARTED, {
+    'phase': BATCHPRE_PHASE, 'clientHost': 'LAPTOP-BRO9FT16', 'handle': 0, 
+    'jobName': 'ME759_Assign1_part_d_CourseMesh'})
+mdb.jobs['ME759_Assign1_part_d_CourseMesh']._Message(ODB_FILE, {
+    'phase': BATCHPRE_PHASE, 
+    'file': 'D:\\AbqWD\\ME759_Assign1_part_d_CourseMesh.odb', 
+    'jobName': 'ME759_Assign1_part_d_CourseMesh'})
+mdb.jobs['ME759_Assign1_part_d_CourseMesh']._Message(COMPLETED, {
+    'phase': BATCHPRE_PHASE, 'message': 'Analysis phase complete', 
+    'jobName': 'ME759_Assign1_part_d_CourseMesh'})
+mdb.jobs['ME759_Assign1_part_d_CourseMesh']._Message(STARTED, {
+    'phase': STANDARD_PHASE, 'clientHost': 'LAPTOP-BRO9FT16', 'handle': 14984, 
+    'jobName': 'ME759_Assign1_part_d_CourseMesh'})
+mdb.jobs['ME759_Assign1_part_d_CourseMesh']._Message(STEP, {
+    'phase': STANDARD_PHASE, 'stepId': 1, 
+    'jobName': 'ME759_Assign1_part_d_CourseMesh'})
+mdb.jobs['ME759_Assign1_part_d_CourseMesh']._Message(ODB_FRAME, {
+    'phase': STANDARD_PHASE, 'step': 0, 'frame': 0, 
+    'jobName': 'ME759_Assign1_part_d_CourseMesh'})
+mdb.jobs['ME759_Assign1_part_d_CourseMesh']._Message(MEMORY_ESTIMATE, {
+    'phase': STANDARD_PHASE, 'jobName': 'ME759_Assign1_part_d_CourseMesh', 
+    'memory': 24.0})
+mdb.jobs['ME759_Assign1_part_d_CourseMesh']._Message(PHYSICAL_MEMORY, {
+    'phase': STANDARD_PHASE, 'physical_memory': 7988.0, 
+    'jobName': 'ME759_Assign1_part_d_CourseMesh'})
+mdb.jobs['ME759_Assign1_part_d_CourseMesh']._Message(MINIMUM_MEMORY, {
+    'minimum_memory': 17.0, 'phase': STANDARD_PHASE, 
+    'jobName': 'ME759_Assign1_part_d_CourseMesh'})
+mdb.jobs['ME759_Assign1_part_d_CourseMesh']._Message(ODB_FRAME, {
+    'phase': STANDARD_PHASE, 'step': 0, 'frame': 1, 
+    'jobName': 'ME759_Assign1_part_d_CourseMesh'})
+mdb.jobs['ME759_Assign1_part_d_CourseMesh']._Message(STATUS, {'totalTime': 1.0, 
+    'attempts': 1, 'timeIncrement': 1.0, 'increment': 1, 'stepTime': 1.0, 
+    'step': 1, 'jobName': 'ME759_Assign1_part_d_CourseMesh', 'severe': 0, 
+    'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['ME759_Assign1_part_d_CourseMesh']._Message(END_STEP, {
+    'phase': STANDARD_PHASE, 'stepId': 1, 
+    'jobName': 'ME759_Assign1_part_d_CourseMesh'})
+mdb.jobs['ME759_Assign1_part_d_CourseMesh']._Message(COMPLETED, {
+    'phase': STANDARD_PHASE, 'message': 'Analysis phase complete', 
+    'jobName': 'ME759_Assign1_part_d_CourseMesh'})
+mdb.jobs['ME759_Assign1_part_d_CourseMesh']._Message(JOB_COMPLETED, {
+    'time': 'Mon Feb 21 11:17:46 2022', 
+    'jobName': 'ME759_Assign1_part_d_CourseMesh'})
+# Save by lenovo on 2022_02_21-11.27.34; build 2018 2017_11_07-22.51.41 127140
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].deleteMesh(regions=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].faces.findAt(((
+    0.063781, 1.15398, 0.0), (0.0, 0.0, 1.0)), ))
+mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].seedEdgeByNumber(
+    constraint=FINER, edges=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].edges.findAt(((
+    0.191342, 0.46194, 0.0), ), ), number=10)
+mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].generateMesh()
+mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].deleteMesh()
+mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].seedPart(
+    deviationFactor=0.1, minSizeFactor=0.1, size=0.1)
+mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].generateMesh()
+mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].deleteMesh(regions=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].faces.findAt(((
+    0.063781, 1.15398, 0.0), (0.0, 0.0, 1.0)), ))
+mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].seedEdgeByNumber(
+    constraint=FINER, edges=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].edges.findAt(((
+    0.191342, 0.46194, 0.0), ), ), number=20)
+mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].generateMesh()
+mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].deleteMesh(regions=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].faces.findAt(((
+    0.063781, 1.15398, 0.0), (0.0, 0.0, 1.0)), ))
+mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].seedEdgeByBias(
+    biasMethod=SINGLE, constraint=FINER, end2Edges=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].edges.findAt(((0.0, 
+    1.0, 0.0), ), ((3.875, 0.0, 0.0), ), ), number=20, ratio=5.0)
+mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].seedEdgeByBias(
+    biasMethod=SINGLE, constraint=FINER, end1Edges=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].edges.findAt(((0.0, 
+    1.0, 0.0), ), ), end2Edges=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].edges.findAt(((
+    3.875, 0.0, 0.0), ), ), number=40, ratio=5.0)
+mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].generateMesh()
+mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].deleteMesh(regions=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].faces.findAt(((
+    0.063781, 1.15398, 0.0), (0.0, 0.0, 1.0)), ))
+mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].seedEdgeByNumber(
+    constraint=FINER, edges=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].edges.findAt(((
+    1.25, 2.5, 0.0), ), ), number=50)
+mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].seedEdgeByNumber(
+    constraint=FINER, edges=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].edges.findAt(((5.0, 
+    1.875, 0.0), ), ), number=25)
+mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].seedEdgeByBias(
+    biasMethod=SINGLE, constraint=FINER, end1Edges=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].edges.findAt(((0.0, 
+    1.0, 0.0), ), ), number=20, ratio=5.0)
+mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].generateMesh()
+mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].deleteMesh(regions=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].faces.findAt(((
+    0.063781, 1.15398, 0.0), (0.0, 0.0, 1.0)), ))
+mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].deleteSeeds(regions=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].edges.findAt(((0.0, 
+    1.0, 0.0), ), ((0.191342, 0.46194, 0.0), ), ((3.875, 0.0, 0.0), ), ((5.0, 
+    1.875, 0.0), ), ((1.25, 2.5, 0.0), ), ))
+mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].generateMesh()
+mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].deleteMesh(regions=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].faces.findAt(((
+    0.063781, 1.15398, 0.0), (0.0, 0.0, 1.0)), ))
+mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].seedEdgeByBias(
+    biasMethod=SINGLE, constraint=FINER, end2Edges=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].edges.findAt(((
+    3.875, 0.0, 0.0), ), ), number=50, ratio=5.0)
+mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].seedEdgeByBias(
+    biasMethod=SINGLE, constraint=FINER, end2Edges=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].edges.findAt(((
+    3.875, 0.0, 0.0), ), ), number=50, ratio=10.0)
+mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].seedEdgeByBias(
+    biasMethod=SINGLE, constraint=FINER, end2Edges=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].edges.findAt(((
+    3.875, 0.0, 0.0), ), ), number=40, ratio=10.0)
+mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].seedEdgeByBias(
+    biasMethod=SINGLE, constraint=FINER, end2Edges=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].edges.findAt(((0.0, 
+    1.0, 0.0), ), ), number=20, ratio=10.0)
+mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].seedEdgeByBias(
+    biasMethod=SINGLE, constraint=FINER, end1Edges=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].edges.findAt(((0.0, 
+    1.0, 0.0), ), ), number=20, ratio=10.0)
+mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].generateMesh()
+mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].deleteMesh(regions=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].faces.findAt(((
+    0.063781, 1.15398, 0.0), (0.0, 0.0, 1.0)), ))
+mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].seedEdgeByNumber(
+    constraint=FINER, edges=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].edges.findAt(((
+    0.191342, 0.46194, 0.0), ), ), number=10)
+mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].seedEdgeByNumber(
+    constraint=FINER, edges=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].edges.findAt(((
+    0.191342, 0.46194, 0.0), ), ), number=20)
+mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].generateMesh()
+mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].deleteMesh(regions=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].faces.findAt(((
+    0.063781, 1.15398, 0.0), (0.0, 0.0, 1.0)), ))
+mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].seedEdgeByBias(
+    biasMethod=SINGLE, constraint=FINER, end2Edges=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].edges.findAt(((
+    1.25, 2.5, 0.0), ), ), number=50, ratio=5.0)
+mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].seedEdgeByBias(
+    biasMethod=SINGLE, constraint=FINER, end1Edges=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].edges.findAt(((
+    1.25, 2.5, 0.0), ), ), number=50, ratio=5.0)
+mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].seedEdgeByBias(
+    biasMethod=SINGLE, constraint=FINER, end2Edges=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].edges.findAt(((5.0, 
+    1.875, 0.0), ), ), number=25, ratio=5.0)
+mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].generateMesh()
+mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].deleteMesh()
+mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].seedPart(
+    deviationFactor=0.1, minSizeFactor=0.1, size=0.05)
+mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].deleteSeeds(regions=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].edges.findAt(((
+    1.25, 2.5, 0.0), ), ))
+mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].deleteSeeds(regions=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].edges.findAt(((5.0, 
+    1.875, 0.0), ), ))
+mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].generateMesh()
+mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].deleteMesh(regions=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].faces.findAt(((
+    0.063781, 1.15398, 0.0), (0.0, 0.0, 1.0)), ))
+mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].deleteSeeds(regions=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].edges.findAt(((0.0, 
+    1.0, 0.0), ), ((0.191342, 0.46194, 0.0), ), ((3.875, 0.0, 0.0), ), ((5.0, 
+    1.875, 0.0), ), ((1.25, 2.5, 0.0), ), ))
+mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].seedEdgeBySize(
+    constraint=FINER, deviationFactor=0.1, edges=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].edges.findAt(((
+    0.191342, 0.46194, 0.0), ), ), minSizeFactor=0.1, size=0.01)
+mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].generateMesh()
+mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].deleteMesh()
+mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].seedPart(
+    deviationFactor=0.1, minSizeFactor=0.1, size=0.1)
+mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].generateMesh()
+mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].deleteMesh()
+mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].seedPart(
+    deviationFactor=0.1, minSizeFactor=0.1, size=0.05)
+mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].generateMesh()
+mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].deleteMesh(regions=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].faces.findAt(((
+    0.063781, 1.15398, 0.0), (0.0, 0.0, 1.0)), ))
+mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].seedEdgeBySize(
+    constraint=FINER, deviationFactor=0.1, edges=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].edges.findAt(((
+    0.191342, 0.46194, 0.0), ), ), minSizeFactor=0.1, size=0.005)
+mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].generateMesh()
+mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].deleteMesh(regions=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].faces.findAt(((
+    0.063781, 1.15398, 0.0), (0.0, 0.0, 1.0)), ))
+mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].seedEdgeBySize(
+    constraint=FINER, deviationFactor=0.1, edges=
+    mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].edges.findAt(((
+    0.191342, 0.46194, 0.0), ), ), minSizeFactor=0.1, size=0.01)
+mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].generateMesh()
+mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].SetFromNodeLabels(name=
+    'Plate_NodesALongXAxis_nset', nodeLabels=(7, 245, 246, 247, 248, 249, 250, 
+    251, 252, 253, 254, 255, 256, 257, 258, 259, 260, 261, 262, 263, 264, 265, 
+    266, 267, 268, 269, 270, 271, 272, 273, 8, 312, 313, 314, 315, 316, 317, 
+    318, 319, 320, 321, 322, 323, 324, 325, 326, 327, 328, 329, 330, 331, 332, 
+    333, 334, 335, 336, 337, 338, 339, 340, 341, 342, 343, 344, 345, 346, 347, 
+    348, 349, 350, 351, 352, 353, 354, 355, 356, 357, 358, 359, 360, 361, 362, 
+    363, 364, 365, 366, 367, 368, 369, 370, 9), unsorted=True)
+mdb.models['ME759_Assign1_Part_d_CPE4'].parts['Part-1'].SetFromNodeLabels(name=
+    'Plate_nodesAlongYAxis_nset', nodeLabels=(5, 138, 137, 136, 135, 134, 133, 
+    132, 131, 130, 129, 128, 127, 126, 125, 124, 123, 122, 121, 120, 119, 118, 
+    117, 116, 115, 114, 113, 112, 111, 110, 3, 60, 59, 58, 57, 56, 55, 54, 53, 
+    52, 51, 2), unsorted=True)
+mdb.models['ME759_Assign1_Part_d_CPE4'].rootAssembly.regenerate()
+mdb.Job(name='ME759_Assign1_part_d_FineMesh', objectToCopy=
+    mdb.jobs['ME759_Assign1_part_d_CourseMesh'])
+mdb.jobs.changeKey(fromName='ME759_Assign1_part_d_FineMesh', toName=
+    'ME759_Assign1_part_d_CPE4_FineMesh')
+mdb.jobs['ME759_Assign1_part_d_CPE4_FineMesh'].submit(consistencyChecking=OFF)
+mdb.jobs['ME759_Assign1_part_d_CPE4_FineMesh']._Message(STARTED, {
+    'phase': BATCHPRE_PHASE, 'clientHost': 'LAPTOP-BRO9FT16', 'handle': 0, 
+    'jobName': 'ME759_Assign1_part_d_CPE4_FineMesh'})
+mdb.jobs['ME759_Assign1_part_d_CPE4_FineMesh']._Message(ODB_FILE, {
+    'phase': BATCHPRE_PHASE, 
+    'file': 'D:\\AbqWD\\ME759_Assign1_part_d_CPE4_FineMesh.odb', 
+    'jobName': 'ME759_Assign1_part_d_CPE4_FineMesh'})
+mdb.jobs['ME759_Assign1_part_d_CPE4_FineMesh']._Message(COMPLETED, {
+    'phase': BATCHPRE_PHASE, 'message': 'Analysis phase complete', 
+    'jobName': 'ME759_Assign1_part_d_CPE4_FineMesh'})
+mdb.jobs['ME759_Assign1_part_d_CPE4_FineMesh']._Message(STARTED, {
+    'phase': STANDARD_PHASE, 'clientHost': 'LAPTOP-BRO9FT16', 'handle': 4772, 
+    'jobName': 'ME759_Assign1_part_d_CPE4_FineMesh'})
+mdb.jobs['ME759_Assign1_part_d_CPE4_FineMesh']._Message(STEP, {
+    'phase': STANDARD_PHASE, 'stepId': 1, 
+    'jobName': 'ME759_Assign1_part_d_CPE4_FineMesh'})
+mdb.jobs['ME759_Assign1_part_d_CPE4_FineMesh']._Message(ODB_FRAME, {
+    'phase': STANDARD_PHASE, 'step': 0, 'frame': 0, 
+    'jobName': 'ME759_Assign1_part_d_CPE4_FineMesh'})
+mdb.jobs['ME759_Assign1_part_d_CPE4_FineMesh']._Message(MEMORY_ESTIMATE, {
+    'phase': STANDARD_PHASE, 'jobName': 'ME759_Assign1_part_d_CPE4_FineMesh', 
+    'memory': 37.0})
+mdb.jobs['ME759_Assign1_part_d_CPE4_FineMesh']._Message(PHYSICAL_MEMORY, {
+    'phase': STANDARD_PHASE, 'physical_memory': 7988.0, 
+    'jobName': 'ME759_Assign1_part_d_CPE4_FineMesh'})
+mdb.jobs['ME759_Assign1_part_d_CPE4_FineMesh']._Message(MINIMUM_MEMORY, {
+    'minimum_memory': 20.0, 'phase': STANDARD_PHASE, 
+    'jobName': 'ME759_Assign1_part_d_CPE4_FineMesh'})
+mdb.jobs.changeKey(fromName='ME759_Assign1_part_d_CourseMesh', toName=
+    'ME759_Assign1_part_d_CPE4_CourseMesh')
+mdb.jobs['ME759_Assign1_part_d_CPE4_FineMesh']._Message(ODB_FRAME, {
+    'phase': STANDARD_PHASE, 'step': 0, 'frame': 1, 
+    'jobName': 'ME759_Assign1_part_d_CPE4_FineMesh'})
+mdb.jobs['ME759_Assign1_part_d_CPE4_FineMesh']._Message(STATUS, {
+    'totalTime': 1.0, 'attempts': 1, 'timeIncrement': 1.0, 'increment': 1, 
+    'stepTime': 1.0, 'step': 1, 
+    'jobName': 'ME759_Assign1_part_d_CPE4_FineMesh', 'severe': 0, 
+    'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['ME759_Assign1_part_d_CPE4_FineMesh']._Message(END_STEP, {
+    'phase': STANDARD_PHASE, 'stepId': 1, 
+    'jobName': 'ME759_Assign1_part_d_CPE4_FineMesh'})
+mdb.jobs['ME759_Assign1_part_d_CPE4_FineMesh']._Message(COMPLETED, {
+    'phase': STANDARD_PHASE, 'message': 'Analysis phase complete', 
+    'jobName': 'ME759_Assign1_part_d_CPE4_FineMesh'})
+mdb.jobs['ME759_Assign1_part_d_CPE4_FineMesh']._Message(JOB_COMPLETED, {
+    'time': 'Mon Feb 21 11:43:09 2022', 
+    'jobName': 'ME759_Assign1_part_d_CPE4_FineMesh'})
+mdb.jobs['ME759_Assign1_part_d_CPE4_CourseMesh'].submit(consistencyChecking=
+    OFF)
+mdb.jobs['ME759_Assign1_part_d_CPE4_CourseMesh']._Message(STARTED, {
+    'phase': BATCHPRE_PHASE, 'clientHost': 'LAPTOP-BRO9FT16', 'handle': 0, 
+    'jobName': 'ME759_Assign1_part_d_CPE4_CourseMesh'})
+mdb.jobs['ME759_Assign1_part_d_CPE4_CourseMesh']._Message(ODB_FILE, {
+    'phase': BATCHPRE_PHASE, 
+    'file': 'D:\\AbqWD\\ME759_Assign1_part_d_CPE4_CourseMesh.odb', 
+    'jobName': 'ME759_Assign1_part_d_CPE4_CourseMesh'})
+mdb.jobs['ME759_Assign1_part_d_CPE4_CourseMesh']._Message(COMPLETED, {
+    'phase': BATCHPRE_PHASE, 'message': 'Analysis phase complete', 
+    'jobName': 'ME759_Assign1_part_d_CPE4_CourseMesh'})
+mdb.jobs['ME759_Assign1_part_d_CPE4_CourseMesh']._Message(STARTED, {
+    'phase': STANDARD_PHASE, 'clientHost': 'LAPTOP-BRO9FT16', 'handle': 13488, 
+    'jobName': 'ME759_Assign1_part_d_CPE4_CourseMesh'})
+mdb.jobs['ME759_Assign1_part_d_CPE4_CourseMesh']._Message(STEP, {
+    'phase': STANDARD_PHASE, 'stepId': 1, 
+    'jobName': 'ME759_Assign1_part_d_CPE4_CourseMesh'})
+mdb.jobs['ME759_Assign1_part_d_CPE4_CourseMesh']._Message(ODB_FRAME, {
+    'phase': STANDARD_PHASE, 'step': 0, 'frame': 0, 
+    'jobName': 'ME759_Assign1_part_d_CPE4_CourseMesh'})
+mdb.jobs['ME759_Assign1_part_d_CPE4_CourseMesh']._Message(MEMORY_ESTIMATE, {
+    'phase': STANDARD_PHASE, 'jobName': 'ME759_Assign1_part_d_CPE4_CourseMesh', 
+    'memory': 37.0})
+mdb.jobs['ME759_Assign1_part_d_CPE4_CourseMesh']._Message(PHYSICAL_MEMORY, {
+    'phase': STANDARD_PHASE, 'physical_memory': 7988.0, 
+    'jobName': 'ME759_Assign1_part_d_CPE4_CourseMesh'})
+mdb.jobs['ME759_Assign1_part_d_CPE4_CourseMesh']._Message(MINIMUM_MEMORY, {
+    'minimum_memory': 20.0, 'phase': STANDARD_PHASE, 
+    'jobName': 'ME759_Assign1_part_d_CPE4_CourseMesh'})
+mdb.jobs['ME759_Assign1_part_d_CPE4_CourseMesh']._Message(ODB_FRAME, {
+    'phase': STANDARD_PHASE, 'step': 0, 'frame': 1, 
+    'jobName': 'ME759_Assign1_part_d_CPE4_CourseMesh'})
+mdb.jobs['ME759_Assign1_part_d_CPE4_CourseMesh']._Message(STATUS, {
+    'totalTime': 1.0, 'attempts': 1, 'timeIncrement': 1.0, 'increment': 1, 
+    'stepTime': 1.0, 'step': 1, 
+    'jobName': 'ME759_Assign1_part_d_CPE4_CourseMesh', 'severe': 0, 
+    'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['ME759_Assign1_part_d_CPE4_CourseMesh']._Message(END_STEP, {
+    'phase': STANDARD_PHASE, 'stepId': 1, 
+    'jobName': 'ME759_Assign1_part_d_CPE4_CourseMesh'})
+mdb.jobs['ME759_Assign1_part_d_CPE4_CourseMesh']._Message(COMPLETED, {
+    'phase': STANDARD_PHASE, 'message': 'Analysis phase complete', 
+    'jobName': 'ME759_Assign1_part_d_CPE4_CourseMesh'})
+mdb.jobs['ME759_Assign1_part_d_CPE4_CourseMesh']._Message(JOB_COMPLETED, {
+    'time': 'Mon Feb 21 11:43:25 2022', 
+    'jobName': 'ME759_Assign1_part_d_CPE4_CourseMesh'})
+# Save by lenovo on 2022_02_21-11.52.01; build 2018 2017_11_07-22.51.41 127140
+# Save by lenovo on 2022_02_21-11.52.01; build 2018 2017_11_07-22.51.41 127140
+# Save by lenovo on 2022_02_21-11.52.02; build 2018 2017_11_07-22.51.41 127140
+# Save by lenovo on 2022_02_21-11.52.02; build 2018 2017_11_07-22.51.41 127140
+# Save by lenovo on 2022_02_21-11.52.02; build 2018 2017_11_07-22.51.41 127140
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].parts['Part-1'].SetFromNodeLabels(name=
+    'Cylinder_RadialNodes', nodeLabels=(20, 19, 18, 17, 16), unsorted=True)
+mdb.models['Model-1'].rootAssembly.regenerate()
+mdb.jobs['ME759_Assign1_part_c_CPE4'].submit(consistencyChecking=OFF)
+mdb.jobs['ME759_Assign1_part_c_CPE4']._Message(STARTED, {
+    'phase': BATCHPRE_PHASE, 'clientHost': 'LAPTOP-BRO9FT16', 'handle': 0, 
+    'jobName': 'ME759_Assign1_part_c_CPE4'})
+mdb.jobs['ME759_Assign1_part_c_CPE4']._Message(ODB_FILE, {
+    'phase': BATCHPRE_PHASE, 
+    'file': 'D:\\AbqWD\\ME759_Assign1_part_c_CPE4.odb', 
+    'jobName': 'ME759_Assign1_part_c_CPE4'})
+mdb.jobs['ME759_Assign1_part_c_CPE4']._Message(COMPLETED, {
+    'phase': BATCHPRE_PHASE, 'message': 'Analysis phase complete', 
+    'jobName': 'ME759_Assign1_part_c_CPE4'})
+mdb.jobs['ME759_Assign1_part_c_CPE4']._Message(STARTED, {
+    'phase': STANDARD_PHASE, 'clientHost': 'LAPTOP-BRO9FT16', 'handle': 3156, 
+    'jobName': 'ME759_Assign1_part_c_CPE4'})
+mdb.jobs['ME759_Assign1_part_c_CPE4']._Message(STEP, {'phase': STANDARD_PHASE, 
+    'stepId': 1, 'jobName': 'ME759_Assign1_part_c_CPE4'})
+mdb.jobs['ME759_Assign1_part_c_CPE4']._Message(ODB_FRAME, {
+    'phase': STANDARD_PHASE, 'step': 0, 'frame': 0, 
+    'jobName': 'ME759_Assign1_part_c_CPE4'})
+mdb.jobs['ME759_Assign1_part_c_CPE4']._Message(MEMORY_ESTIMATE, {
+    'phase': STANDARD_PHASE, 'jobName': 'ME759_Assign1_part_c_CPE4', 
+    'memory': 24.0})
+mdb.jobs['ME759_Assign1_part_c_CPE4']._Message(PHYSICAL_MEMORY, {
+    'phase': STANDARD_PHASE, 'physical_memory': 7988.0, 
+    'jobName': 'ME759_Assign1_part_c_CPE4'})
+mdb.jobs['ME759_Assign1_part_c_CPE4']._Message(MINIMUM_MEMORY, {
+    'minimum_memory': 17.0, 'phase': STANDARD_PHASE, 
+    'jobName': 'ME759_Assign1_part_c_CPE4'})
+mdb.jobs['ME759_Assign1_part_c_CPE4']._Message(ODB_FRAME, {
+    'phase': STANDARD_PHASE, 'step': 0, 'frame': 1, 
+    'jobName': 'ME759_Assign1_part_c_CPE4'})
+mdb.jobs['ME759_Assign1_part_c_CPE4']._Message(STATUS, {'totalTime': 1.0, 
+    'attempts': 1, 'timeIncrement': 1.0, 'increment': 1, 'stepTime': 1.0, 
+    'step': 1, 'jobName': 'ME759_Assign1_part_c_CPE4', 'severe': 0, 
+    'iterations': 1, 'phase': STANDARD_PHASE, 'equilibrium': 1})
+mdb.jobs['ME759_Assign1_part_c_CPE4']._Message(END_STEP, {
+    'phase': STANDARD_PHASE, 'stepId': 1, 
+    'jobName': 'ME759_Assign1_part_c_CPE4'})
+mdb.jobs['ME759_Assign1_part_c_CPE4']._Message(COMPLETED, {
+    'phase': STANDARD_PHASE, 'message': 'Analysis phase complete', 
+    'jobName': 'ME759_Assign1_part_c_CPE4'})
+mdb.jobs['ME759_Assign1_part_c_CPE4']._Message(JOB_COMPLETED, {
+    'time': 'Mon Feb 21 15:29:54 2022', 
+    'jobName': 'ME759_Assign1_part_c_CPE4'})
+# Save by lenovo on 2022_02_21-16.54.24; build 2018 2017_11_07-22.51.41 127140

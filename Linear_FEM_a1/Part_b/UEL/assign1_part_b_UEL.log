@@ -1,0 +1,33 @@
+Analysis initiated from SIMULIA established products
+Abaqus JOB assign1_part_b_UEL
+Abaqus 3DEXPERIENCE R2018x
+Abaqus License Manager checked out the following licenses:
+Abaqus/Standard checked out 5 tokens from Flexnet server localhost.
+<1019 out of 1024 licenses remain available>.
+Begin Compiling Abaqus/Standard User Subroutines
+3/16/2022 6:06:44 PM
+Intel(R) Fortran Intel(R) 64 Compiler Classic for applications running on Intel(R) 64, Version 2021.5.0 Build 20211109_000000
+Copyright (C) 1985-2021 Intel Corporation.  All rights reserved.
+
+End Compiling Abaqus/Standard User Subroutines
+Begin Linking Abaqus/Standard User Subroutines
+   Creating library standardU.lib and object standardU.exp
+libirc.lib(fast_mem_ops.obj) : warning LNK4210: .CRT section exists; there may be unhandled static initializers or terminators
+End Linking Abaqus/Standard User Subroutines
+3/16/2022 6:06:47 PM
+Begin Analysis Input File Processor
+3/16/2022 6:06:47 PM
+Run pre.exe
+3/16/2022 6:06:50 PM
+End Analysis Input File Processor
+Begin Abaqus/Standard Analysis
+3/16/2022 6:06:50 PM
+Run standard.exe
+3/16/2022 6:06:53 PM
+End Abaqus/Standard Analysis
+Begin Convert MFS to SFS
+3/16/2022 6:06:54 PM
+Run SMASimUtility.exe
+3/16/2022 6:06:54 PM
+End Convert MFS to SFS
+Abaqus JOB assign1_part_b_UEL COMPLETED

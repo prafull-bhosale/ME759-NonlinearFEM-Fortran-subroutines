@@ -1,0 +1,22 @@
+Analysis initiated from SIMULIA established products
+Abaqus JOB ME759_Assign1_part_c_CPE4
+Abaqus 3DEXPERIENCE R2018x
+Abaqus License Manager checked out the following licenses:
+Abaqus/Standard checked out 5 tokens from Flexnet server matlab.iitb.ac.in.
+<20 out of 25 licenses remain available>.
+Begin Analysis Input File Processor
+2/22/2022 11:18:26 AM
+Run pre.exe
+2/22/2022 11:18:30 AM
+End Analysis Input File Processor
+Begin Abaqus/Standard Analysis
+2/22/2022 11:18:30 AM
+Run standard.exe
+2/22/2022 11:18:33 AM
+End Abaqus/Standard Analysis
+Begin Convert MFS to SFS
+2/22/2022 11:18:35 AM
+Run SMASimUtility.exe
+2/22/2022 11:18:35 AM
+End Convert MFS to SFS
+Abaqus JOB ME759_Assign1_part_c_CPE4 COMPLETED

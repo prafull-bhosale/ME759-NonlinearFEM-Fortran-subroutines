@@ -1,0 +1,600 @@
+1
+
+   Abaqus 3DEXPERIENCE R2018x                                  Date 22-Feb-2022   Time 11:18:29
+   For use by INDIAN INSTITUTE OF TECHNOLOGY BOMBAY under license from Dassault Systemes or its subsidiary.
+
+
+
+                         The Abaqus Software is a product of:
+
+                           Dassault Systemes SIMULIA Corp.
+                           1301 Atwood Avenue, Suite 101W
+                              Johnston, RI 02919, USA
+ 
+
+
+                   The Abaqus Software is available only under license
+                   from Dassault Systemes or its subsidiary and may be
+                   used or reproduced only in accordance with the terms
+                   of such license.
+ 
+                          On machine LAPTOP-BRO9FT16 
+                          you are authorized to run
+                          Abaqus/Standard until 15-Aug-2022
+
+                          Your site id is: 200000000020602 
+
+
+ 
+                    For assistance or any other information you may
+                    obtain contact information for your local office
+                    from the world wide web at:
+
+                      http://www.3ds.com/products/simulia/locations/
+
+ 
+                * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+                *                                                         * 
+                *                   *****************                     * 
+                *                   *  N O T I C E  *                     * 
+                *                   *****************                     * 
+                *                                                         * 
+                *                                                         * 
+                *               Abaqus 3DEXPERIENCE R2018x                * 
+                *                                                         * 
+                *          BUILD ID: 2017_11_07-22.51.41 127140           * 
+                *                                                         * 
+                *                                                         * 
+                *  Please make sure you are using                         * 
+                *  release 3DEXPERIENCE R2018x manuals                    * 
+                *  plus the notes accompanying this release.              * 
+                *                                                         * 
+                *                                                         * 
+                *                                                         * 
+                *                                                         * 
+                *                                                         * 
+                *   This program may not be used for commercial purposes  * 
+                *           without payment of a commercial fee.          * 
+                *                                                         * 
+                * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+
+
+ 
+
+
+
+     PROCESSING PART, INSTANCE, AND ASSEMBLY INFORMATION
+   *******************************************************
+
+
+     END PROCESSING PART, INSTANCE, AND ASSEMBLY INFORMATION
+   ***********************************************************
+
+
+
+
+     OPTIONS BEING PROCESSED
+   ***************************
+
+
+  *Heading
+  *Node
+  *Element, type=CPE4
+  *Nset, nset="ASSEMBLY_PART-1-1_Edge Seeds-1"
+  *Nset, nset="ASSEMBLY_PART-1-1_Edge Seeds-2"
+  *Nset, nset=ASSEMBLY_PART-1-1_CYLINDER_RADIALNODES, unsorted
+  *Nset, nset=ASSEMBLY_PART-1-1_SET-1
+  *Elset, elset="ASSEMBLY_PART-1-1_Edge Seeds-1"
+  *Elset, elset="ASSEMBLY_PART-1-1_Edge Seeds-2"
+  *Elset, elset=ASSEMBLY_PART-1-1_SET-1
+  *Nset, nset=ASSEMBLY_SET-1
+  *Nset, nset=ASSEMBLY_SET-2
+  *Nset, nset=ASSEMBLY_SYMM_BC1
+  *Nset, nset=ASSEMBLY_SYMM_BC2
+  *Elset, elset=ASSEMBLY_RADIALVARIATION
+  *Elset, elset=ASSEMBLY_SET-1
+  *Elset, elset=ASSEMBLY_SET-2
+  *Elset, elset=ASSEMBLY_SYMM_BC1
+  *Elset, elset=ASSEMBLY_SYMM_BC2
+  *Elset, elset=ASSEMBLY__INNERSURFACE_S2
+  *material, name=MATERIAL-1
+  *elastic
+  *solidsection, elset=ASSEMBLY_PART-1-1_SET-1, material=MATERIAL-1
+  *solidsection, elset=ASSEMBLY_PART-1-1_SET-1, material=MATERIAL-1
+  *surface, type=ELEMENT, name=ASSEMBLY_INNERSURFACE
+  *surface, type=ELEMENT, name=ASSEMBLY_INNERSURFACE
+  *boundary
+  *boundary
+  *boundary
+  *boundary
+  *surface, type=ELEMENT, name=ASSEMBLY_INNERSURFACE
+  *output, field, variable=PRESELECT
+  *output, history, variable=PRESELECT
+  *output, field, variable=PRESELECT
+  *output, history, variable=PRESELECT
+  *output, field, variable=PRESELECT
+  *output, history, variable=PRESELECT
+  *Step, name=Step-1, nlgeom=NO
+  *output, field, variable=PRESELECT
+  *output, history, variable=PRESELECT
+  *Step, name=Step-2
+  *Step, name=Step-1, nlgeom=NO
+  *Step, name=Step-2
+  *Step, name=Step-1, nlgeom=NO
+  *static
+  *dsload
+  *output, field, variable=PRESELECT
+  *output, history, variable=PRESELECT
+  *nodeprint
+  *elprint, elset=ASSEMBLY_RADIALVARIATION, position=NODES
+  *endstep
+  *Step, name=Step-2
+  *matrixgenerate, stiffness, load
+  *matrixoutput, stiffness, load, format=MATRIXINPUT
+  *dsload
+  *endstep
+  *boundary
+  *boundary
+  *Step, name=Step-1, nlgeom=NO
+  *static
+  *endstep
+  *Step, name=Step-2
+  *endstep
+
+     - (RAMP) OR (STEP) - INDICATE USE OF DEFAULT AMPLITUDES ASSOCIATED WITH THE STEP
+
+     - (RAMP) OR (STEP) - INDICATE USE OF DEFAULT AMPLITUDES ASSOCIATED WITH THE STEP
+
+
+                              E L E M E N T,   N O D E,   A N D   S U R F A C E   M A P S
+
+
+**NOTE: This section may not include complete information about
+        members of sets and surfaces. Use *PREPRINT, MODEL=YES 
+        in order to get the set and surface members printed    
+        under the following sections:                          
+            - E L E M E N T   S E T S                          
+            - N O D E   S E T S                                
+            - S U R F A C E   D E F I N I T I O N S .          
+
+
+Assembly name: ASSEMBLY
+Number of instances: 1
+
+ASSEMBLY LEVEL
+  node sets:
+    SET-1:
+      instance name: PART-1-1
+      number of nodes: 5
+      nodes: 
+        16 17 18 19 20
+
+    SET-2:
+      instance name: PART-1-1
+      number of nodes: 5
+      nodes: 
+        1 2 3 4 5
+
+    SYMM_BC1:
+      instance name: PART-1-1
+      number of nodes: 5
+      nodes: 
+        16 17 18 19 20
+
+    SYMM_BC2:
+      instance name: PART-1-1
+      number of nodes: 5
+      nodes: 
+        1 2 3 4 5
+
+  element sets:
+    RADIALVARIATION:
+      instance name: PART-1-1
+      number of elements: 4
+      elements: 
+        9 10 11 12
+
+    SET-1:
+      instance name: PART-1-1
+      number of elements: 4
+      elements: 
+        9 10 11 12
+
+    SET-2:
+      instance name: PART-1-1
+      number of elements: 4
+      elements: 
+        1 2 3 4
+
+    SYMM_BC1:
+      instance name: PART-1-1
+      number of elements: 4
+      elements: 
+        9 10 11 12
+
+    SYMM_BC2:
+      instance name: PART-1-1
+      number of elements: 4
+      elements: 
+        1 2 3 4
+
+
+  Surfaces:
+    INNERSURFACE:
+      type: element based
+      instance name: PART-1-1
+        face id:  S2
+        number of elements: 3
+        elements:
+          4 8 12
+
+INSTANCE LEVEL
+  node sets:
+    Instance name: PART-1-1
+      node set name: CYLINDER_RADIALNODES
+      type: UNSORTED
+        number of nodes: 5
+        nodes: 
+          20 19 18 17 16
+      node set name: Edge Seeds-1
+        number of nodes: 4
+        nodes: 
+          1 6 11 16
+      node set name: Edge Seeds-2
+        number of nodes: 5
+        nodes: 
+          1 2 3 4 5
+      node set name: SET-1
+        number of nodes: 20
+        nodes: 
+          1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20
+
+  element sets:
+    Instance name: PART-1-1
+      element set name: Edge Seeds-1
+        number of elements: 3
+        elements: 
+          1 5 9
+      element set name: Edge Seeds-2
+        number of elements: 4
+        elements: 
+          1 2 3 4
+      element set name: SET-1
+        number of elements: 12
+        elements: 
+          1 2 3 4 5 6 7 8 9 10 11 12
+
+  Surfaces:
+
+GLOBAL TO LOCAL NODE AND ELEMENT MAPS
+  Global     Local      
+  node       node       
+  number     number     
+                        Instance name                                   
+   1          1         PART-1-1                                        
+   2          2         PART-1-1                                        
+   3          3         PART-1-1                                        
+   4          4         PART-1-1                                        
+   5          5         PART-1-1                                        
+   6          6         PART-1-1                                        
+   7          7         PART-1-1                                        
+   8          8         PART-1-1                                        
+   9          9         PART-1-1                                        
+   10         10        PART-1-1                                        
+   11         11        PART-1-1                                        
+   12         12        PART-1-1                                        
+   13         13        PART-1-1                                        
+   14         14        PART-1-1                                        
+   15         15        PART-1-1                                        
+   16         16        PART-1-1                                        
+   17         17        PART-1-1                                        
+   18         18        PART-1-1                                        
+   19         19        PART-1-1                                        
+   20         20        PART-1-1                                        
+
+  Global     Local      
+  element    element    
+  number     number     
+                        Instance name                                   
+   1          1         PART-1-1                                        
+   2          2         PART-1-1                                        
+   3          3         PART-1-1                                        
+   4          4         PART-1-1                                        
+   5          5         PART-1-1                                        
+   6          6         PART-1-1                                        
+   7          7         PART-1-1                                        
+   8          8         PART-1-1                                        
+   9          9         PART-1-1                                        
+   10         10        PART-1-1                                        
+   11         11        PART-1-1                                        
+   12         12        PART-1-1                                        
+
+LOCAL TO GLOBAL NODE AND ELEMENT MAPS
+                                                  Local      Global     
+                                                  node       node       
+                                                  number     number
+  Instance name
+  PART-1-1                                         1          1         
+  PART-1-1                                         2          2         
+  PART-1-1                                         3          3         
+  PART-1-1                                         4          4         
+  PART-1-1                                         5          5         
+  PART-1-1                                         6          6         
+  PART-1-1                                         7          7         
+  PART-1-1                                         8          8         
+  PART-1-1                                         9          9         
+  PART-1-1                                         10         10        
+  PART-1-1                                         11         11        
+  PART-1-1                                         12         12        
+  PART-1-1                                         13         13        
+  PART-1-1                                         14         14        
+  PART-1-1                                         15         15        
+  PART-1-1                                         16         16        
+  PART-1-1                                         17         17        
+  PART-1-1                                         18         18        
+  PART-1-1                                         19         19        
+  PART-1-1                                         20         20        
+
+                                                  Local      Global     
+                                                  element    element    
+                                                  number     number
+  Instance name
+  PART-1-1                                         1          1         
+  PART-1-1                                         2          2         
+  PART-1-1                                         3          3         
+  PART-1-1                                         4          4         
+  PART-1-1                                         5          5         
+  PART-1-1                                         6          6         
+  PART-1-1                                         7          7         
+  PART-1-1                                         8          8         
+  PART-1-1                                         9          9         
+  PART-1-1                                         10         10        
+  PART-1-1                                         11         11        
+  PART-1-1                                         12         12        
+
+
+
+
+                            P R O B L E M   S I Z E
+
+
+          NUMBER OF ELEMENTS IS                                    12
+          NUMBER OF NODES IS                                       20
+          NUMBER OF NODES DEFINED BY THE USER                      20
+          TOTAL NUMBER OF VARIABLES IN THE MODEL                   40
+          (DEGREES OF FREEDOM PLUS MAX NO. OF ANY LAGRANGE MULTIPLIER
+           VARIABLES. INCLUDE *PRINT,SOLVE=YES TO GET THE ACTUAL NUMBER.)
+
+
+
+                              END OF USER INPUT PROCESSING
+
+
+
+     JOB TIME SUMMARY
+       USER TIME (SEC)      =  0.10000    
+       SYSTEM TIME (SEC)    =   0.0000    
+       TOTAL CPU TIME (SEC) =  0.10000    
+       WALLCLOCK TIME (SEC) =          1
+1
+
+   Abaqus 3DEXPERIENCE R2018x                                  Date 22-Feb-2022   Time 11:18:33
+   For use by INDIAN INSTITUTE OF TECHNOLOGY BOMBAY under license from Dassault Systemes or its subsidiary.
+
+                                                                                               STEP    1  INCREMENT    1
+                                                                                          TIME COMPLETED IN THIS STEP   0.00    
+
+
+                        S T E P       1     S T A T I C   A N A L Y S I S
+
+
+                                                                                          
+
+     AUTOMATIC TIME CONTROL WITH -
+          A SUGGESTED INITIAL TIME INCREMENT OF                 1.00    
+          AND A TOTAL TIME PERIOD OF                            1.00    
+          THE MINIMUM TIME INCREMENT ALLOWED IS                1.000E-05
+          THE MAXIMUM TIME INCREMENT ALLOWED IS                 1.00    
+
+     LINEAR EQUATION SOLVER TYPE         DIRECT SPARSE
+  
+                   M E M O R Y   E S T I M A T E
+  
+ PROCESS      FLOATING PT       MINIMUM MEMORY        MEMORY TO
+              OPERATIONS           REQUIRED          MINIMIZE I/O
+             PER ITERATION           (MB)               (MB)
+  
+     1          5.44E+03               17                 24
+  
+ NOTE:
+      (1) SINCE ABAQUS DOES NOT PRE-ALLOCATE MEMORY AND ONLY ALLOCATES MEMORY AS NEEDED DURING THE ANALYSIS,
+          THE MEMORY REQUIREMENT PRINTED HERE CAN ONLY BE VIEWED AS A GENERAL GUIDELINE BASED ON THE BEST
+          KNOWLEDGE AVAILABLE AT THE BEGINNING OF A STEP BEFORE THE SOLUTION PROCESS HAS BEGUN.
+      (2) THE ESTIMATE IS NORMALLY UPDATED AT THE BEGINNING OF EVERY STEP. IT IS THE MAXIMUM VALUE OF THE
+          ESTIMATE FROM THE CURRENT STEP TO THE LAST STEP OF THE ANALYSIS, WITH UNSYMMETRIC SOLUTION TAKEN
+          INTO ACCOUNT IF APPLICABLE. 
+      (3) SINCE THE ESTIMATE IS BASED ON THE ACTIVE DEGREES OF FREEDOM IN THE FIRST ITERATION OF THE 
+          CURRENT STEP, THE MEMORY ESTIMATE MIGHT BE SIGNIFICANTLY DIFFERENT THAN ACTUAL USAGE FOR 
+          PROBLEMS WITH SUBSTANTIAL CHANGES IN ACTIVE DEGREES OF FREEDOM BETWEEN STEPS (OR EVEN WITHIN
+          THE SAME STEP). EXAMPLES ARE: PROBLEMS WITH SIGNIFICANT CONTACT CHANGES, PROBLEMS WITH MODEL
+          CHANGE, PROBLEMS WITH BOTH STATIC STEP AND STEADY STATE DYNAMIC PROCEDURES WHERE ACOUSTIC 
+          ELEMENTS WILL ONLY BE ACTIVATED IN THE STEADY STATE DYNAMIC STEPS.
+      (4) FOR MULTI-PROCESS EXECUTION, THE ESTIMATED VALUE OF FLOATING POINT OPERATIONS FOR EACH PROCESS
+          IS BASED ON AN INITIAL SCHEDULING OF OPERATIONS AND MIGHT NOT REFLECT THE ACTUAL FLOATING 
+          POINT OPERATIONS COMPLETED ON EACH PROCESS. OPERATIONS ARE DYNAMICALLY BALANCED DURING EXECUTION, 
+          SO THE ACTUAL BALANCE OF OPERATIONS BETWEEN PROCESSES IS EXPECTED TO BE BETTER THAN THE ESTIMATE
+          PRINTED HERE.
+      (5) THE UPPER LIMIT OF MEMORY THAT CAN BE ALLOCATED BY ABAQUS WILL IN GENERAL DEPEND ON THE VALUE OF
+          THE "MEMORY" PARAMETER AND THE AMOUNT OF PHYSICAL MEMORY AVAILABLE ON THE MACHINE. PLEASE SEE
+          THE "ABAQUS ANALYSIS USER'S MANUAL" FOR MORE DETAILS. THE ACTUAL USAGE OF MEMORY AND OF DISK
+          SPACE FOR SCRATCH DATA WILL DEPEND ON THIS UPPER LIMIT AS WELL AS THE MEMORY REQUIRED TO MINIMIZE
+          I/O. IF THE MEMORY UPPER LIMIT IS GREATER THAN THE MEMORY REQUIRED TO MINIMIZE I/O, THEN THE ACTUAL
+          MEMORY USAGE WILL BE CLOSE TO THE ESTIMATED "MEMORY TO MINIMIZE I/O" VALUE, AND THE SCRATCH DISK
+          USAGE WILL BE CLOSE-TO-ZERO; OTHERWISE, THE ACTUAL MEMORY USED WILL BE CLOSE TO THE PREVIOUSLY
+          MENTIONED MEMORY LIMIT, AND THE SCRATCH DISK USAGE WILL BE ROUGHLY PROPORTIONAL TO THE DIFFERENCE
+          BETWEEN THE ESTIMATED "MEMORY TO MINIMIZE I/O" AND THE MEMORY UPPER LIMIT. HOWEVER ACCURATE
+          ESTIMATE OF THE SCRATCH DISK SPACE IS NOT POSSIBLE.
+      (6) USING "*RESTART, WRITE" CAN GENERATE A LARGE AMOUNT OF DATA WRITTEN IN THE WORK DIRECTORY.
+
+
+                                INCREMENT     1 SUMMARY
+
+
+ TIME INCREMENT COMPLETED   1.00    ,  FRACTION OF STEP COMPLETED   1.00    
+ STEP TIME COMPLETED        1.00    ,  TOTAL TIME COMPLETED         1.00    
+
+
+
+                                                  E L E M E N T   O U T P U T
+
+
+
+
+
+   THE FOLLOWING TABLE IS PRINTED AT THE NODES FOR ELEMENT TYPE CPE4 AND ELEMENT SET 
+   ASSEMBLY_RADIALVARIATION
+
+    ELEMENT         ND   FOOT-   S11         S22         S33         S12         E11         E22         E33         E12         
+                         NOTE 
+
+           9         11         7.9038E-02  0.5868      0.1998     -0.2539     -1.5694E-03  5.0320E-03   0.000     -6.6014E-03
+           9         12         4.2767E-02  0.6231      0.1998     -0.2902     -2.0409E-03  5.5035E-03   0.000     -7.5444E-03
+           9         17        -6.3443E-02  0.7293      0.1998     -0.1062     -3.4217E-03  6.8842E-03   0.000     -2.7615E-03
+           9         16        -1.3895E-02  0.6798      0.1998     -9.2933E-02 -2.7775E-03  6.2401E-03   0.000     -2.4163E-03
+          10         12        -1.8398E-03  0.6680      0.1999     -0.3349     -2.6220E-03  6.0861E-03   0.000     -8.7081E-03
+          10         13        -5.7661E-02  0.7238      0.1999     -0.3907     -3.3477E-03  6.8118E-03   0.000     -1.0159E-02
+          10         18        -0.2007      0.8669      0.1999     -0.1430     -5.2070E-03  8.6711E-03   0.000     -3.7186E-03
+          10         17        -0.1244      0.7906      0.1999     -0.1226     -4.2157E-03  7.6798E-03   0.000     -3.1874E-03
+          11         13        -0.1286      0.7955      0.2001     -0.4621     -4.2729E-03  7.7405E-03   0.000     -1.2013E-02
+          11         14        -0.2210      0.8879      0.2001     -0.5545     -5.4742E-03  8.9418E-03   0.000     -1.4416E-02
+          11         19        -0.4240       1.091      0.2001     -0.2029     -8.1126E-03  1.1580E-02   0.000     -5.2766E-03
+          11         18        -0.2978      0.9646      0.2001     -0.1691     -6.4715E-03  9.9390E-03   0.000     -4.3972E-03
+          12         14        -0.3441       1.013      0.2005     -0.6783     -7.0803E-03  1.0556E-02   0.000     -1.7637E-02
+          12         15        -0.5137       1.182      0.2005     -0.8479     -9.2848E-03  1.2761E-02   0.000     -2.2046E-02
+          12         20        -0.8240       1.493      0.2005     -0.3104     -1.3319E-02  1.6796E-02   0.000     -8.0693E-03
+          12         19        -0.5924       1.261      0.2005     -0.2483     -1.0308E-02  1.3784E-02   0.000     -6.4555E-03
+
+ MAXIMUM                 7.9038E-02   1.493      0.2005     -9.2933E-02 -1.5694E-03  1.6796E-02   0.000     -2.4163E-03            
+ ELEMENT                         9          12          12           9           9          12           9           9             
+
+ MINIMUM                -0.8240      0.5868      0.1998     -0.8479     -1.3319E-02  5.0320E-03   0.000     -2.2046E-02            
+ ELEMENT                        12           9           9          12          12           9           9          12             
+  
+  
+  
+  
+                                       N O D E   O U T P U T
+  
+  
+  
+  
+   THE FOLLOWING TABLE IS PRINTED FOR ALL NODES
+  
+       NODE FOOT-  U1             U2           
+            NOTE
+  
+         1      0.0000000E+00  1.1904059E-02 
+         2      0.0000000E+00  1.2677171E-02 
+         3      0.0000000E+00  1.3851834E-02 
+         4      0.0000000E+00  1.5668625E-02 
+         5      0.0000000E+00  1.8608118E-02 
+         6      5.9520295E-03  1.0309218E-02 
+         7      6.3385859E-03  1.0978753E-02 
+         8      6.9259171E-03  1.1996040E-02 
+         9      7.8343121E-03  1.3569427E-02 
+        10      9.3040592E-03  1.6115103E-02 
+        11      1.0309218E-02  5.9520295E-03 
+        12      1.0978753E-02  6.3385859E-03 
+        13      1.1996040E-02  6.9259171E-03 
+        14      1.3569427E-02  7.8343121E-03 
+        15      1.6115103E-02  9.3040592E-03 
+        16      1.1904059E-02  0.0000000E+00 
+        17      1.2677171E-02  0.0000000E+00 
+        18      1.3851834E-02  0.0000000E+00 
+        19      1.5668625E-02  0.0000000E+00 
+        20      1.8608118E-02  0.0000000E+00 
+
+ MAXIMUM         1.8608E-02  1.8608E-02
+ AT NODE                20           5
+
+ MINIMUM          0.000       0.000    
+ AT NODE                 1          16
+1
+
+   Abaqus 3DEXPERIENCE R2018x                                  Date 22-Feb-2022   Time 11:18:33
+   For use by INDIAN INSTITUTE OF TECHNOLOGY BOMBAY under license from Dassault Systemes or its subsidiary.
+
+                                                                                               STEP    2  INCREMENT    1
+                                                                                          TIME COMPLETED IN THIS STEP   0.00    
+ 
+
+
+                        S T E P       2     M A T R I X   G E N E R A T E
+ 
+  THE FOLLOWING GLOBAL MATRICES WILL BE GENERATED AND WRITTEN TO ME759_Assign1_part_c_CPE4_X2.sim
+
+    STIFFNESS
+    LOAD
+ 
+  IF MULTY-POINT CONSTRAINTS ARE SPECIFIED IN THE MODEL, THEY WILL BE APPLIED
+ 
+  THE FOLLOWING GLOBAL MATRICES WILL BE WRITTEN TO THE FOLLOWING TEXT FILES
+
+    STIFFNESS          TO ME759_Assign1_part_c_CPE4_STIF2.mtx
+    LOAD               TO ME759_Assign1_part_c_CPE4_LOAD2.mtx
+ 
+  MATRIX OUTPUT FORMAT - MATRIX INPUT
+  
+                   M E M O R Y   E S T I M A T E
+  
+ PROCESS      FLOATING PT       MINIMUM MEMORY        MEMORY TO
+              OPERATIONS           REQUIRED          MINIMIZE I/O
+             PER ITERATION           (MB)               (MB)
+  
+     1          0.00E+00               17                 17
+  
+ NOTE:
+      (1) SINCE ABAQUS DOES NOT PRE-ALLOCATE MEMORY AND ONLY ALLOCATES MEMORY AS NEEDED DURING THE ANALYSIS,
+          THE MEMORY REQUIREMENT PRINTED HERE CAN ONLY BE VIEWED AS A GENERAL GUIDELINE BASED ON THE BEST
+          KNOWLEDGE AVAILABLE AT THE BEGINNING OF A STEP BEFORE THE SOLUTION PROCESS HAS BEGUN.
+      (2) THE ESTIMATE IS NORMALLY UPDATED AT THE BEGINNING OF EVERY STEP. IT IS THE MAXIMUM VALUE OF THE
+          ESTIMATE FROM THE CURRENT STEP TO THE LAST STEP OF THE ANALYSIS, WITH UNSYMMETRIC SOLUTION TAKEN
+          INTO ACCOUNT IF APPLICABLE. 
+      (3) SINCE THE ESTIMATE IS BASED ON THE ACTIVE DEGREES OF FREEDOM IN THE FIRST ITERATION OF THE 
+          CURRENT STEP, THE MEMORY ESTIMATE MIGHT BE SIGNIFICANTLY DIFFERENT THAN ACTUAL USAGE FOR 
+          PROBLEMS WITH SUBSTANTIAL CHANGES IN ACTIVE DEGREES OF FREEDOM BETWEEN STEPS (OR EVEN WITHIN
+          THE SAME STEP). EXAMPLES ARE: PROBLEMS WITH SIGNIFICANT CONTACT CHANGES, PROBLEMS WITH MODEL
+          CHANGE, PROBLEMS WITH BOTH STATIC STEP AND STEADY STATE DYNAMIC PROCEDURES WHERE ACOUSTIC 
+          ELEMENTS WILL ONLY BE ACTIVATED IN THE STEADY STATE DYNAMIC STEPS.
+      (4) FOR MULTI-PROCESS EXECUTION, THE ESTIMATED VALUE OF FLOATING POINT OPERATIONS FOR EACH PROCESS
+          IS BASED ON AN INITIAL SCHEDULING OF OPERATIONS AND MIGHT NOT REFLECT THE ACTUAL FLOATING 
+          POINT OPERATIONS COMPLETED ON EACH PROCESS. OPERATIONS ARE DYNAMICALLY BALANCED DURING EXECUTION, 
+          SO THE ACTUAL BALANCE OF OPERATIONS BETWEEN PROCESSES IS EXPECTED TO BE BETTER THAN THE ESTIMATE
+          PRINTED HERE.
+      (5) THE UPPER LIMIT OF MEMORY THAT CAN BE ALLOCATED BY ABAQUS WILL IN GENERAL DEPEND ON THE VALUE OF
+          THE "MEMORY" PARAMETER AND THE AMOUNT OF PHYSICAL MEMORY AVAILABLE ON THE MACHINE. PLEASE SEE
+          THE "ABAQUS ANALYSIS USER'S MANUAL" FOR MORE DETAILS. THE ACTUAL USAGE OF MEMORY AND OF DISK
+          SPACE FOR SCRATCH DATA WILL DEPEND ON THIS UPPER LIMIT AS WELL AS THE MEMORY REQUIRED TO MINIMIZE
+          I/O. IF THE MEMORY UPPER LIMIT IS GREATER THAN THE MEMORY REQUIRED TO MINIMIZE I/O, THEN THE ACTUAL
+          MEMORY USAGE WILL BE CLOSE TO THE ESTIMATED "MEMORY TO MINIMIZE I/O" VALUE, AND THE SCRATCH DISK
+          USAGE WILL BE CLOSE-TO-ZERO; OTHERWISE, THE ACTUAL MEMORY USED WILL BE CLOSE TO THE PREVIOUSLY
+          MENTIONED MEMORY LIMIT, AND THE SCRATCH DISK USAGE WILL BE ROUGHLY PROPORTIONAL TO THE DIFFERENCE
+          BETWEEN THE ESTIMATED "MEMORY TO MINIMIZE I/O" AND THE MEMORY UPPER LIMIT. HOWEVER ACCURATE
+          ESTIMATE OF THE SCRATCH DISK SPACE IS NOT POSSIBLE.
+      (6) USING "*RESTART, WRITE" CAN GENERATE A LARGE AMOUNT OF DATA WRITTEN IN THE WORK DIRECTORY.
+  
+
+
+          THE ANALYSIS HAS BEEN COMPLETED
+
+
+
+                              ANALYSIS COMPLETE
+
+
+
+     JOB TIME SUMMARY
+       USER TIME (SEC)      =  0.10000    
+       SYSTEM TIME (SEC)    =  0.10000    
+       TOTAL CPU TIME (SEC) =  0.20000    
+       WALLCLOCK TIME (SEC) =          0
